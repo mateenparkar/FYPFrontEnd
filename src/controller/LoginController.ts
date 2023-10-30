@@ -15,7 +15,7 @@ export class LoginController {
             req.session.token = await login(data);
             res.redirect('/empty');
         }catch(e){
-            res.locals.errorMessage = (e as Error).message;
+            res.locals.errormessage = (e as Error).message;
             res.render('login');
         }
     }
