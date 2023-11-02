@@ -13,7 +13,7 @@ export class LoginController {
 
         try{
             req.session.token = await login(data);
-            res.redirect('/empty');
+            res.redirect('/books');
         }catch(e){
             res.locals.errormessage = (e as Error).message;
             res.render('login');

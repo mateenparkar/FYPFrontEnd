@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <style>
+        /* Add some basic styles for better presentation */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .book {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .cover-image {
+            max-width: 100px;
+            max-height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Book List</h1>
+    <div id="books-container">
+        {% for book in books %}
+            <div class="book">
+                <h2>{{book.title}}</h2>
+                <p><strong>Author:</strong> {{book.authorName}}</p>
+                <p><strong>Published Date:</strong> {{book.formattedPublishedDate}}</p>
+                <p><strong>Genre:</strong> {{book.genre}}</p>
+                <p><strong>Description:</strong> {{book.description}}</p>
+                <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
