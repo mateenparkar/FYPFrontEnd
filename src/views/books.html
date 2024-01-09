@@ -34,7 +34,9 @@
                         <p><strong>Published Date:</strong> {{ book.formattedPublishedDate }}</p>
                         <p><strong>Genre:</strong> {{ book.genreName }}</p>
                         <p><strong>Description:</strong> {{ book.description }}</p>
-                        <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
+                        <a href="/books/{{ book.book_id }}">
+                            <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
+                        </a>
                     </div>
                 </div>
             {% endfor %}
