@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Detail</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add some basic styles for better presentation */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .cover-image {
+            max-width: 200px;
+            max-height: 300px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="text-center">
+        <h2>{{ books.title }}</h2>
+        <p><strong>Author:</strong> {{ books.authorName }}</p>
+        <p><strong>Published Date:</strong> {{ books.formattedPublishedDate }}</p>
+        <p><strong>Genre:</strong> {{ books.genreName }}</p>
+        <p><strong>Description:</strong> {{ books.description }}</p>
+        <img class="cover-image" src="{{ books.cover_image_url }}" alt="Book Cover">
+    </div>
+</body>
+
+</html>
