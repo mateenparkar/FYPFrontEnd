@@ -10,8 +10,8 @@ router.get('/login', LoginController.get);
 router.post('/login', LoginController.post);
 router.get('/register', RegisterController.get);
 router.post('/register', RegisterController.post);
-router.get('/books', BooksController.getAll);
-router.get('/books/:id', BooksController.getOne);
+router.get('/books', login, BooksController.getAll);
+router.get('/books/:id', login, BooksController.getOne);
 
 router.get('/logout', LoginController.logOut);
 export default router

@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import {Credentials} from "../model/auth";
-import { login } from "../service/authService";
+import { login, whoami } from "../service/authService";
 
 
 export class LoginController {
@@ -13,10 +13,11 @@ export class LoginController {
 
         try{
             req.session.token = await login(data);
+            req.session.user = await whoami(req.session.token);
             res.redirect('/books');
         }catch(e){
             res.locals.errormessage = (e as Error).message;
-            res.render('login');
+            res.render('login', {body: req.body, user: req.session.user});
         }
     }
 
