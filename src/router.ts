@@ -14,4 +14,5 @@ router.get('/books', login, BooksController.getAll);
 router.get('/books/:id', login, BooksController.getOne);
 
 router.get('/logout', LoginController.logOut);
+router.get('/likeBook/:id', BooksController.likeBook)
 export default router
