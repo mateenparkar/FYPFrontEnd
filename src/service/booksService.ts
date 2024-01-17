@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Books } from "../model/books";
+import { Book } from "../model/likeBooks";
 
 interface BookWithAuthor extends Books {
     authorName: string;
@@ -58,3 +59,12 @@ export const viewBook = async function (id: number): Promise<BookWithAuthor> {
         throw new Error('Could not get book with author');
     }
 };
+
+
+export const likeBook = async function(book:Book): Promise<void> {
+    try{
+        await axios.post("http://localhost:8080/api/addBookToUser", book);
+    }catch(e){
+        throw new Error('Failed to like book');
+    }
+}
