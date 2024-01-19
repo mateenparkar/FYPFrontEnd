@@ -17,7 +17,7 @@ export class BooksController {
         try{
             const id = parseInt(req.params.id, 10); 
             const book = await viewBook(id);
-            res.render('book_detail.html', {books:book});
+            res.render('book_detail.html', {books:book, user: req.session.user});
         }catch(e){
             console.error(e);
         }

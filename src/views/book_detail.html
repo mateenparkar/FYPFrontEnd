@@ -1,42 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Detail</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
+{% block title %}{{ books.title }}{% endblock %}
 
-        .cover-image {
-            max-width: 200px;
-            max-height: 300px;
-            margin: 0 auto;
-        }
-
-        .like-button {
-            cursor: pointer;
-            text-decoration: none; 
-            color: white;
-            background-color: #007bff; 
-            border: 1px solid #007bff;
-            padding: 8px 16px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        .like-button:hover {
-            color: red;
-        }
-    </style>
-</head>
-
-<body>
+{% block content %}
     <div class="text-center">
+        <style>
+            /* Specific styles for book_detail.html */
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            }
+
+            .cover-image {
+                max-width: 200px;
+                max-height: 300px;
+                margin: 0 auto;
+            }
+
+            .like-button {
+                cursor: pointer;
+                text-decoration: none; 
+                color: white;
+                background-color: #ff5733; /* Specific color for book_detail.html */
+                border: 1px solid #ff5733; /* Specific color for book_detail.html */
+                padding: 8px 16px;
+                border-radius: 4px;
+                display: inline-block;
+            }
+
+            .like-button:hover {
+                color: red;
+            }
+        </style>
+
         <h2>{{ books.title }}</h2>
         <p><strong>Author:</strong> {{ books.authorName }}</p>
         <p><strong>Published Date:</strong> {{ books.formattedPublishedDate }}</p>
@@ -49,6 +45,4 @@
             Like
         </a>
     </div>
-</body>
-
-</html>
+{% endblock %}
