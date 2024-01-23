@@ -1,4 +1,3 @@
-
 export class Books {
     book_id!: number
     title!:string

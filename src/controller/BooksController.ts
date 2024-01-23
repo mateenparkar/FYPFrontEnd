@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
-import { likeBook, viewBook, viewBooks } from "../service/booksService";
+import { getLikedBooks, likeBook, viewBook, viewBooks } from "../service/booksService";
 import { Book } from "../model/likeBooks";
 
 
 export class BooksController {
     public static getAll = async function(req:Request, res:Response): Promise<void>{
         try{
+            const likedBooks = await getLikedBooks(req.session.user!.userId);
             const books = await viewBooks();
-            res.render('books.html', {books:books});
+            res.render('books.html', {books:books, liked_books:likedBooks});
         }catch(e){
             console.error(e);
         }
