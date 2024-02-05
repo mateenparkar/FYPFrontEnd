@@ -66,6 +66,9 @@
                     {% for liked_book in liked_books %}
                         <div>
                             <h2>{{ liked_book.title }}</h2>
+                            <a href="/books/{{ liked_book.book_id }}">
+                                <img class="cover-image" src="{{ liked_book.cover_image_url }}" alt="Book Cover">
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
