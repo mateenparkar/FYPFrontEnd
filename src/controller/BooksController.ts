@@ -8,7 +8,7 @@ export class BooksController {
         try{
             const likedBooks = await getLikedBooks(req.session.user!.userId);
             const books = await viewBooks();
-            res.render('books.html', {books:books, liked_books:likedBooks});
+            res.render('books.html', {books:books, liked_books:likedBooks, user: req.session.user});
         }catch(e){
             console.error(e);
         }
