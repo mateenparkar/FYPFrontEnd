@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getLikedBooks, likeBook, viewBook, viewBooks } from "../service/booksService";
 import { Book } from "../model/likeBooks";
+import { getComments } from "../service/commentService";
 
 
 export class BooksController {
@@ -18,7 +19,8 @@ export class BooksController {
         try{
             const id = parseInt(req.params.id, 10); 
             const book = await viewBook(id);
-            res.render('book_detail.html', {books:book, user: req.session.user});
+            const comment = await getComments(id);
+            res.render('book_detail.html', {books:book, user: req.session.user, comments:comment});
         }catch(e){
             console.error(e);
         }

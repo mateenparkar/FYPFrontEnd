@@ -44,5 +44,12 @@
             <span>&#x2661;</span> 
             Like
         </a>
+
+        <h3>Comments</h3>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.comment_text }}</li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
