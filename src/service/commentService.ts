@@ -10,3 +10,11 @@ export const getComments = async function (bookId: number): Promise<Comment[]> {
         throw new Error('Could not get comments');
     }
 }
+
+export const postComment = async function(comment: Comment):Promise<void> {
+    try{
+        await axios.post("http://localhost:8080/api/comment", comment);
+    }catch(e){
+        throw new Error('Failed to post comment')
+    }
+}
