@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #e27d5f, #e8d5b7);
+        color: #FFFFFF; 
+    }
+
+</style>
     <div id="book-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             {% for book in books %}
