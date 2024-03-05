@@ -1,11 +1,19 @@
 import axios from "axios";
 import { Comment } from "../model/comment";
+import { User } from "../model/auth";
 
 export const getComments = async function (bookId: number): Promise<Comment[]> {
     try{
         const commentResponse = await axios.get(`http://localhost:8080/api/comments/${bookId}`);
         const comments: Comment[] = commentResponse.data;
-        return comments;
+        const commentsWithUserDetails = await Promise.all(
+            comments.map(async (comment) => {
+                const userResponse = await axios.get(`http://localhost:8080/api/user/${comment.user_id}`);
+                const user: User = userResponse.data; // Adjust this based on your user model
+                return { ...comment, userName: user.username }; // Add the userName property to the comment
+            })
+        );
+        return commentsWithUserDetails;
     }catch(error){
         throw new Error('Could not get comments');
     }
