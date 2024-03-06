@@ -7,9 +7,8 @@ import { getComments } from "../service/commentService";
 export class BooksController {
     public static getAll = async function(req:Request, res:Response): Promise<void>{
         try{
-            const likedBooks = await getLikedBooks(req.session.user!.userId);
             const books = await viewBooks();
-            res.render('books.html', {books:books, liked_books:likedBooks, user: req.session.user});
+            res.render('books.html', {books:books, user: req.session.user});
         }catch(e){
             console.error(e);
         }

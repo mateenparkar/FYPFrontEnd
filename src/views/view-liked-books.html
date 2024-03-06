@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    /* Your existing styles here */
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+        text-align: center;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+        max-height: 300px;
+        max-width: 100%;
+        object-fit: contain;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    .card-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding-top: 10px;
+        text-align: center;
+    }
+</style>
+
+<div class="row row-cols-1 g-4 justify-content-center">
+    {% for liked_book in liked_books %}
+        <div class="col mb-4">
+            <div class="card">
+                <a href="/books/{{ liked_book.book_id }}">
+                    <img src="{{ liked_book.cover_image_url }}" class="card-img-top" alt="Book Cover">
+                </a>
+            </div>
+        </div>
+        {% if not loop.last %}
+            <hr class="fade-line">
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

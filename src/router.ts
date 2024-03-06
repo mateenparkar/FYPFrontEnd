@@ -4,6 +4,7 @@ import {login} from './middleware/auth';
 import { RegisterController } from './controller/RegisterController';
 import { BooksController } from './controller/BooksController';
 import { CommentController } from './controller/CommentController';
+import { LikedBooksController } from './controller/LikedBooksController';
 
 const router = express.Router();
 
@@ -17,5 +18,6 @@ router.get('/books/:id', login, BooksController.getOne);
 router.get('/logout', LoginController.logOut);
 router.get('/likeBook/:id', BooksController.likeBook);
 router.post('/postComment/:id', CommentController.postComment)
+router.get('/view-liked-books', login, LikedBooksController.getLikedBooks);
 
 export default router

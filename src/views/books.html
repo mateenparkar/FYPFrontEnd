@@ -8,63 +8,30 @@
     }
 
 </style>
-    <div id="book-carousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            {% for book in books %}
-                <div class="carousel-item {% if loop.first %}active{% endif %}">
-                    <div class="text-center">
-                        <h2>{{ book.title }}</h2>
-                        <p><strong>Author:</strong> {{ book.authorName }}</p>
-                        <p><strong>Published Date:</strong> {{ book.formattedPublishedDate }}</p>
-                        <p><strong>Genre:</strong> {{ book.genreName }}</p>
-                        <p><strong>Description:</strong> {{ book.description }}</p>
-                        <a href="/books/{{ book.book_id }}">
-                            <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#book-carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#book-carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-    <button id="likedBooksBtn" type="button" class="btn btn-primary">View Liked Books</button>
-    <div class="modal fade" id="likedBooksModal" tabindex="-1" aria-labelledby="likedBooksModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="likedBooksModalLabel">Liked Books</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"> 
-                    {% for liked_book in liked_books %}
-                        <div>
-                            <h2>{{ liked_book.title }}</h2>
-                            <a href="/books/{{ liked_book.book_id }}">
-                                <img class="cover-image" src="{{ liked_book.cover_image_url }}" alt="Book Cover">
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
+<div id="book-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for book in books %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <div class="text-center">
+                <h2>{{ book.title }}</h2>
+                <p><strong>Author:</strong> {{ book.authorName }}</p>
+                <p><strong>Published Date:</strong> {{ book.formattedPublishedDate }}</p>
+                <p><strong>Genre:</strong> {{ book.genreName }}</p>
+                <p><strong>Description:</strong> {{ book.description }}</p>
+                <a href="/books/{{ book.book_id }}">
+                    <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
+                </a>
             </div>
         </div>
+        {% endfor %}
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var likedBooksModal = new bootstrap.Modal(document.getElementById('likedBooksModal'), {
-                keyboard: false
-            });
-
-            document.getElementById('likedBooksBtn').addEventListener('click', function () {
-                likedBooksModal.show();
-            });
-        });
-    </script>
+    <button class="carousel-control-prev" type="button" data-bs-target="#book-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#book-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>   
 {% endblock %}
