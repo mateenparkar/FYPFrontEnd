@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 tab-col">
+            <a class="nav-link active" href="/books">Discover</a>
+        </div>
+        <div class="col-6 tab-col">
+            <a class="nav-link" href="/community">Community</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e27d5f, #e8d5b7);
+        color: #FFFFFF; 
+    }
+    .tab-col {
+        text-align: center;
+        padding: 1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.5); 
+        transition: background 0.3s; 
+    }
+
+    .tab-col:last-child {
+        border-right: none; 
+    }
+
+    .tab-col:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
