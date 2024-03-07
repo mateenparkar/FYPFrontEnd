@@ -5,6 +5,7 @@ import { RegisterController } from './controller/RegisterController';
 import { BooksController } from './controller/BooksController';
 import { CommentController } from './controller/CommentController';
 import { LikedBooksController } from './controller/LikedBooksController';
+import { CommunityController } from './controller/CommunityController';
 
 const router = express.Router();
 
@@ -19,5 +20,5 @@ router.get('/logout', LoginController.logOut);
 router.get('/likeBook/:id', BooksController.likeBook);
 router.post('/postComment/:id', CommentController.postComment)
 router.get('/view-liked-books', login, LikedBooksController.getLikedBooks);
-
+router.get('/community', login, CommunityController.get);
 export default router
