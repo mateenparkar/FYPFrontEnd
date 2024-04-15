@@ -36,6 +36,11 @@
 
 </style>
 <div id="book-carousel" class="carousel slide" data-bs-ride="carousel">
+    {% if errormessage %}
+                        <div class="alert alert-danger" id="invalid-user-login">
+                            {{ errormessage }}
+                        </div>
+                    {% endif %}
     <div class="carousel-inner">
         {% for book in books %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
