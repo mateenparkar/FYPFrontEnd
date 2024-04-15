@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Books } from "../model/books";
 import { Book, userBooks } from "../model/likeBooks";
 
@@ -61,7 +61,9 @@ export const likeBook = async function(book:Book): Promise<void> {
     try{
         await axios.post("http://localhost:8080/api/addBookToUser", book);
     }catch(e){
-        throw new Error('Failed to like book');
+        if((e as AxiosError).response?.status === 400){
+            throw new Error('Failed to like book');
+        }
     }
 }
 
