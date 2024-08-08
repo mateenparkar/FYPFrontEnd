@@ -7,8 +7,6 @@
         background-color: #f8f9fa;
     }
 
-    /* Your existing styles here */
-
     .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease-in-out;
@@ -32,6 +30,21 @@
         padding-top: 10px;
         text-align: center;
     }
+
+    .unlike-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .unlike-button:hover {
+        background-color: #c82333;
+    }
 </style>
 
 <div class="row row-cols-1 g-4 justify-content-center">
@@ -41,6 +54,11 @@
                 <a href="/books/{{ liked_book.book_id }}">
                     <img src="{{ liked_book.cover_image_url }}" class="card-img-top" alt="Book Cover">
                 </a>
+                <div class="card-footer">
+                    <form action="/deleteLikeBook/{{ liked_book.book_id }}" method="post">
+                        <button type="submit" class="unlike-button">Unlike</button>
+                    </form>
+                </div>
             </div>
         </div>
         {% if not loop.last %}

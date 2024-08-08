@@ -24,4 +24,5 @@ router.get('/view-liked-books', login, LikedBooksController.getLikedBooks);
 router.get('/community', login, CommunityController.get);
 router.post('/addPost', login, PostController.post);
 router.get('/post-to-community', login, PostController.get);
+router.post('/deleteLikeBook/:id', login, BooksController.deleteLikeBook);
 export default router

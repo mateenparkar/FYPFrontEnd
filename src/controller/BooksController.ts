@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getLikedBooks, likeBook, viewBook, viewBooks } from "../service/booksService";
+import { deleteBook, getLikedBooks, likeBook, viewBook, viewBooks } from "../service/booksService";
 import { Book } from "../model/likeBooks";
 import { getComments } from "../service/commentService";
 
@@ -32,6 +32,21 @@ export class BooksController {
                 book_id: parseInt(req.params.id, 10)
             }
             await likeBook(data);
+            res.redirect('/books');
+        }catch(e){
+            console.error(e)
+            res.locals.errormessage = (e as Error).message;
+            res.redirect('/books');
+        }
+    }
+
+    public static deleteLikeBook = async function(req:Request, res:Response): Promise<void>{
+        try{
+            const data:Book = {
+                user_id: req.session.user!.userId,
+                book_id: parseInt(req.params.id, 10)
+            }
+            await deleteBook(data);
             res.redirect('/books');
         }catch(e){
             console.error(e)

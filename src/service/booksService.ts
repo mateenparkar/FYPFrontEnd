@@ -67,6 +67,19 @@ export const likeBook = async function(book:Book): Promise<void> {
     }
 }
 
+export const deleteBook = async function(book:Book):Promise<void>{
+    try{
+        console.log("Running deleteBook service with book: ", book)
+        await axios.delete("http://localhost:8080/api/deleteBookFromUser", { data: book });
+    }catch(e){
+        console.log(e)
+        if((e as AxiosError).response?.status != 200){
+            throw new Error('Failed to delete book');
+        }
+    
+    }
+}
+
 export const getLikedBooks = async function(id:number):Promise<BookWithAuthor[]>{
     try{
         const response = await axios.get('http://localhost:8080/api/getUserBooks/' + id);
