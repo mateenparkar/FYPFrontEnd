@@ -7,6 +7,7 @@ import { CommentController } from './controller/CommentController';
 import { LikedBooksController } from './controller/LikedBooksController';
 import { CommunityController } from './controller/CommunityController';
 import { PostController } from './controller/PostController';
+import { AccountController } from './controller/AccountController';
 
 const router = express.Router();
 
@@ -25,4 +26,6 @@ router.get('/community', login, CommunityController.get);
 router.post('/addPost', login, PostController.post);
 router.get('/post-to-community', login, PostController.get);
 router.post('/deleteLikeBook/:id', login, BooksController.deleteLikeBook);
+router.get('/account', login, AccountController.get)
+router.post('/api/account', login, AccountController.update)
 export default router

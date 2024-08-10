@@ -3,6 +3,11 @@ export type Credentials = {
     password: string;
 }
 
+export type Update = {
+    userId:number;
+    password:string;
+}
+
 
 export type User = {
     userId:number;
