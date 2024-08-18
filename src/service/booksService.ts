@@ -94,3 +94,25 @@ export const getLikedBooks = async function(id:number):Promise<BookWithAuthor[]>
         throw new Error('Could not get liked books')
     }
 }
+
+export const updateUserBook = async function(book:userBooks):Promise<void>{
+    try{
+        await axios.put("http://localhost:8080/api/updateBookForUser", book);
+    }catch(error){
+        if((error as AxiosError).response?.status != 200){
+            throw new Error('Failed to delete book');
+        }
+    }
+}
+
+export const hasUserReadBook = async function(userId: number, bookId: number): Promise<boolean> {
+    try {
+        const response = await axios.get(`http://localhost:8080/api/getBookDetails/${userId}/${bookId}`);
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to check if the user has read the book');
+    }
+};
+
+
+

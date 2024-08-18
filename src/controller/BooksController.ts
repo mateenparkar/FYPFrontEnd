@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { deleteBook, getLikedBooks, likeBook, viewBook, viewBooks } from "../service/booksService";
-import { Book } from "../model/likeBooks";
+import { deleteBook, getLikedBooks, hasUserReadBook, likeBook, updateUserBook, viewBook, viewBooks } from "../service/booksService";
+import { Book, userBooks } from "../model/likeBooks";
 import { getComments } from "../service/commentService";
 
 
@@ -19,7 +19,8 @@ export class BooksController {
             const id = parseInt(req.params.id, 10); 
             const book = await viewBook(id);
             const comment = await getComments(id);
-            res.render('book_detail.html', {books:book, user: req.session.user, comments:comment});
+            const hasReadFlag = await hasUserReadBook(req.session.user!.userId, id);
+            res.render('book_detail.html', {books:book, hasRead: hasReadFlag, user: req.session.user, comments:comment});
         }catch(e){
             console.error(e);
         }
@@ -53,5 +54,25 @@ export class BooksController {
             res.locals.errormessage = (e as Error).message;
             res.redirect('/books');
         }
+    }
+
+    public static updateUserBook = async function(req:Request, res:Response): Promise<void>{
+        try{
+            const data:userBooks = {
+                user_id: req.session.user!.userId,
+                book_id: parseInt(req.params.id, 10),
+                read_status: "Read",
+                rating: parseInt(req.body.rating, 10),
+                date_read: new Date()
+
+            }
+            await updateUserBook(data);
+            res.redirect('/books');
+        }catch(e){
+            console.error(e)
+            res.locals.errormessage = (e as Error).message;
+            res.redirect('/books');
+        }
+
     }
 }

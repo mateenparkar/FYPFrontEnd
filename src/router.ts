@@ -28,4 +28,5 @@ router.get('/post-to-community', login, PostController.get);
 router.post('/deleteLikeBook/:id', login, BooksController.deleteLikeBook);
 router.get('/account', login, AccountController.get)
 router.post('/api/account', login, AccountController.update)
+router.post('/updateBook/:id', login, BooksController.updateUserBook);
 export default router
