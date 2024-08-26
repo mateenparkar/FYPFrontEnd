@@ -19,11 +19,15 @@ export const login = async function(credentials:Credentials):Promise<string> {
 
 
 export const register = async function(user: User): Promise<void> {
-
     try {
         await axios.post("http://localhost:8080/api/register", user);
     } catch (e) {
-        throw new Error('Failed to register');
+        const axiosError = e as AxiosError;
+        if (axiosError.response?.data) {
+            throw new Error(axiosError.response.data as string);
+        } else {
+            throw new Error('Failed to register');
+        }
     }
 }
 
