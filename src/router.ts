@@ -8,6 +8,7 @@ import { LikedBooksController } from './controller/LikedBooksController';
 import { CommunityController } from './controller/CommunityController';
 import { PostController } from './controller/PostController';
 import { AccountController } from './controller/AccountController';
+import { LeaderboardController } from './controller/LeaderboardController';
 
 const router = express.Router();
 
@@ -29,4 +30,5 @@ router.post('/deleteLikeBook/:id', login, BooksController.deleteLikeBook);
 router.get('/account', login, AccountController.get)
 router.post('/api/account', login, AccountController.update)
 router.post('/updateBook/:id', login, BooksController.updateUserBook);
+router.get('/leaderboard', login, LeaderboardController.get);
 export default router
