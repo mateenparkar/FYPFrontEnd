@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<style>
+    body {
+        background: linear-gradient(to right, #e27d5f, #e8d5b7);
+        color: #FFFFFF; 
+    }
+
+    .tab-col {
+        text-align: center;
+        padding: 1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.5); 
+        transition: background 0.3s; 
+    }
+
+    .tab-col:last-child {
+        border-right: none; 
+    }
+
+    .tab-col:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    table {
+        width: 50%;
+        margin: 2rem auto;  /* Add some spacing around the table */
+        border-collapse: collapse;
+        background-color: #fff; /* Light background for table */
+        color: #333;  /* Dark text color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add some shadow */
+    }
+
+    table, th, td {
+        border: 1px solid #ddd; /* Light grey borders */
+    }
+
+    th, td {
+        padding: 15px; /* Increased padding for better readability */
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2; /* Light grey background for headers */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9; /* Alternate row colors for readability */
+    }
+</style>
+
+<h1 class="text-center">Leaderboard</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leaderboard in leaderboards %}
+            <tr>
+                <td>{{ leaderboard.username }}</td>
+                <td>{{ leaderboard.score }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

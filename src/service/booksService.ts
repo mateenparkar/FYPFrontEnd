@@ -97,7 +97,7 @@ export const getLikedBooks = async function(id:number):Promise<BookWithAuthor[]>
 
 export const updateUserBook = async function(book:userBooks):Promise<void>{
     try{
-        await axios.put("http://localhost:8080/api/updateBookForUser", book);
+        await axios.post("http://localhost:8080/api/updateBookForUser", book);
     }catch(error){
         if((error as AxiosError).response?.status != 200){
             throw new Error('Failed to delete book');
