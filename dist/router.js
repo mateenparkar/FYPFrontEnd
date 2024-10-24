@@ -32,5 +32,5 @@ router.post('/deleteLikeBook/:id', auth_1.login, BooksController_1.BooksControll
 router.get('/account', auth_1.login, AccountController_1.AccountController.get);
 router.post('/api/account', auth_1.login, AccountController_1.AccountController.update);
 router.post('/updateBook/:id', auth_1.login, BooksController_1.BooksController.updateUserBook);
-router.get('/leaderboard', auth_1.login, LeaderboardController_1.LeaderboardController.get);
+router.get('/leaderboard', LeaderboardController_1.LeaderboardController.get);
 exports.default = router;
