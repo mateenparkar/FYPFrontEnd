@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 tab-col">
+            <a class="nav-link active" href="/books">Discover</a>
+        </div>
+        <div class="col-6 tab-col">
+            <a class="nav-link" href="/community">Community</a>
+        </div>
+    </div>
+
+    <a href="/post-to-community" class="post-to-community-link">
+        <div class="post-to-community">
+            <div class="overlay"></div> 
+            <div class="post-to-community-text">
+                Post to Community
+            </div>
+        </div>
+    </a>
+
+    <div class="posts-container">
+        <div class="posts">
+            {% for post in posts %}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content }}</p>
+                        <p class="card-text">Posted on: {{ post.formattedPublishedDate }}</p>
+                        <img class="post-image" src="data:image/jpeg;base64,{{ post.imageBytes }}" alt="${post.title}">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e27d5f, #e8d5b7);
+        color: #FFFFFF;
+        position: relative;
+    }
+
+    .post-to-community {
+        width: 80%; 
+        height: 200px; 
+        background-image: url('public/0_sYaJNKIRUABWykUJ.jpg'); 
+        background-size: cover;
+        background-position: center;
+        position: relative; 
+        margin-top: 10px; 
+        margin-left: auto; 
+        margin-right: auto;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; 
+        position: relative; 
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .post-to-community-text {
+        position: relative;
+        z-index: 1; 
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(169, 169, 169, 0.7); 
+        z-index: 0; 
+    }
+
+    .post-to-community-link {
+        text-decoration: none;
+    }
+
+    .tab-col {
+        text-align: center;
+        padding: 1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        transition: background 0.3s;
+    }
+
+    .tab-col:last-child {
+        border-right: none;
+    }
+
+    .tab-col:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .posts-container {
+        max-height: calc(100vh - 250px); 
+        overflow-y: auto;
+        padding-top: 160px; 
+    }
+    
+    .posts {
+        padding: 20px;
+    }
+    
+    .post-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
