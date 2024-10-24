@@ -19,7 +19,7 @@ router.get('/login', LoginController_1.LoginController.get);
 router.post('/login', LoginController_1.LoginController.post);
 router.get('/register', RegisterController_1.RegisterController.get);
 router.post('/register', RegisterController_1.RegisterController.post);
-router.get('/books', BooksController_1.BooksController.getAll);
+router.get('/books', auth_1.login, BooksController_1.BooksController.getAll);
 router.get('/books/:id', auth_1.login, BooksController_1.BooksController.getOne);
 router.get('/logout', LoginController_1.LoginController.logOut);
 router.get('/likeBook/:id', BooksController_1.BooksController.likeBook);
