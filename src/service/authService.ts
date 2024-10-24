@@ -5,7 +5,7 @@ import type { AxiosError } from "axios";
 
 export const login = async function(credentials:Credentials):Promise<string> {
     try{
-        const response = await axios.post("http://localhost:8080/api/login", credentials);
+        const response = await axios.post("http://16.16.24.64:8080/api/login", credentials);
         return response.data.token;
     }catch(e){
         if((e as AxiosError).response?.status === 401){
@@ -20,7 +20,7 @@ export const login = async function(credentials:Credentials):Promise<string> {
 
 export const register = async function(user: User): Promise<void> {
     try {
-        await axios.post("http://localhost:8080/api/register", user);
+        await axios.post("http://16.16.24.64:8080/api/register", user);
     } catch (e) {
         const axiosError = e as AxiosError;
         if (axiosError.response?.data) {
@@ -33,7 +33,7 @@ export const register = async function(user: User): Promise<void> {
 
 export const whoami = async function(token: string): Promise<User> {
     try {
-        const response = await axios.get("http://localhost:8080/api/whoami", {
+        const response = await axios.get("http://16.16.24.64:8080/api/whoami", {
             headers: { Authorization: `Bearer ${token}` },
         })
         if (response.status === 200) {
