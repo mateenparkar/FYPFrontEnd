@@ -50,5 +50,6 @@ jobs:
         run: |
           echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
           chmod 600 ec2_key.pem
-          ssh -i ec2_key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart myapp.service'
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart myapp.service'
           rm -f ec2_key.pem  # Clean up the key file after use
+  
