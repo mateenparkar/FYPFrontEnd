@@ -17,7 +17,7 @@ export const viewBooks = async function (): Promise<BookWithAuthor[]> {
             const authorResponse = await axios.get(`http://16.16.24.64:8080/api/author/${book.author}`);
             const authorName: string = authorResponse.data.name;
 
-            const genreResponse = await axios.get(`http://16.16.24.64/api/genre/${book.genre}`);
+            const genreResponse = await axios.get(`http://16.16.24.64:8080/api/genre/${book.genre}`);
             const genreName: string = genreResponse.data.genre_name;
 
             const formattedPublishedDate: string = new Date(book.published_date)
