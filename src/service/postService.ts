@@ -10,7 +10,7 @@ interface PostWithDate extends Posts {
 export const getPosts = async function (): Promise<PostWithDate[]> {
     try{
 
-        const response = await axios.get('http://16.16.24.64:8080/api/getPosts');
+        const response = await axios.get('http://13.49.21.183:8080/api/getPosts');
         const posts: Posts[] = response.data;
         const postsWithDate: Promise<PostWithDate>[] = posts.map(async(post:Posts) => {
             const formattedPublishedDate: string = new Date(post.date_posted)
@@ -34,7 +34,7 @@ export const addPost = async function(postData: Posts) {
         formData.append('date_posted', postData.date_posted.toISOString().split('T')[0]);
         formData.append('post_image_url', postData.post_image_url);
 
-        await axios.post('http://16.16.24.64:8080/api/post', formData, {
+        await axios.post('http://13.49.21.183:8080/api/post', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
