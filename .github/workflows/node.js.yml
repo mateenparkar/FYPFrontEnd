@@ -53,7 +53,7 @@ jobs:
     
           # Pull the latest code and restart the service
           ssh -i ec2_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /path/to/your/repo  # Navigate to your repository's directory
+            cd /home/ec2/FYPFrontEnd  # Navigate to your repository's directory
             git pull origin main    # Pull the latest code from the main branch
             sudo systemctl restart myapp.service  # Restart the service
           EOF
