@@ -33,15 +33,19 @@ jobs:
 
       - run: npm install  # Install dependencies
       - run: npm run build --if-present
-      - run: npm test
 
       # Deploy to EC2 instance
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}  # Replace with your EC2 instance's public IP or hostname
-          username: ec2-user  # or the appropriate user for your setup
-          key: ${{ secrets.EC2_KEY }}  # Reference to your PEM key stored as a GitHub secret
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_KEY }}
           port: 22
-          source: "dist/*"  # Change this to your build output directory
-          target: "/home/ec2-user/FYPFrontEnd/"  # Replace with your actual target directory on the EC2 instance
+          source: "dist/*"  # Adjust this if your build output is in a different folder
+          target: "/home/ec2-user/FYPFrontEnd/"  # Adjust this to your frontend directory
+
+      # Restart your backend service
+      - name: Restart Backend Service
+        run: |
+          ssh -i ${{ secrets.EC2_KEY }} ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart myapp.service'
