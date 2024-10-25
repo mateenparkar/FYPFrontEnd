@@ -4,7 +4,7 @@ import { User } from "../model/auth";
 
 export const getComments = async function (bookId: number): Promise<Comment[]> {
     try{
-        const commentResponse = await axios.get(`http://13.49.21.183:8080/api/comments/${bookId}`);
+        const commentResponse = await axios.get(`http://13.49.21.183/api/comments/${bookId}`);
         const comments: Comment[] = commentResponse.data;
         const commentsWithUserDetails = await Promise.all(
             comments.map(async (comment) => {
@@ -21,7 +21,7 @@ export const getComments = async function (bookId: number): Promise<Comment[]> {
 
 export const postComment = async function(comment: Comment):Promise<void> {
     try{
-        await axios.post("http://13.49.21.183:8080/api/comment", comment);
+        await axios.post("http://13.49.21.183/api/comment", comment);
     }catch(e){
         throw new Error('Failed to post comment')
     }
