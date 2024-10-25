@@ -45,11 +45,19 @@ jobs:
           source: "dist/*"  # Adjust this if your build output is in a different folder
           target: "/home/ec2-user/FYPFrontEnd/"  # Adjust this to your frontend directory
 
-      # Restart your backend service
-      - name: Restart Backend Service
+      # Restart your backend service and pull the latest code
+      - name: Restart Backend Service and Pull Latest Code
         run: |
           echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
           chmod 600 ec2_key.pem
-          ssh -i ec2_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart myapp.service'
+    
+          # Pull the latest code and restart the service
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /path/to/your/repo  # Navigate to your repository's directory
+            git pull origin main    # Pull the latest code from the main branch
+            sudo systemctl restart myapp.service  # Restart the service
+          EOF
+    
           rm -f ec2_key.pem  # Clean up the key file after use
+
   
