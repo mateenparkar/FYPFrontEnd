@@ -7,6 +7,7 @@
     body {
         background: linear-gradient(to right, #e27d5f, #e8d5b7);
         color: #FFFFFF; 
+        font-family: Arial, sans-serif; /* Add a clean, readable font */
     }
 
     .tab-col {
@@ -25,31 +26,46 @@
     }
 
     table {
-        width: 50%;
-        margin: 2rem auto;  /* Add some spacing around the table */
+        width: 70%; /* Adjusted width for better page balance */
+        margin: 2rem auto;
         border-collapse: collapse;
-        background-color: #fff; /* Light background for table */
-        color: #333;  /* Dark text color */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add some shadow */
-    }
-
-    table, th, td {
-        border: 1px solid #ddd; /* Light grey borders */
+        background: rgba(255, 255, 255, 0.2); /* Semi-transparent table background */
+        color: #FFFFFF; /* White text for consistency */
+        border-radius: 10px; /* Smooth table edges */
+        overflow: hidden; /* Prevent content overflow */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
     }
 
     th, td {
-        padding: 15px; /* Increased padding for better readability */
+        padding: 15px;
         text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle borders */
     }
 
     th {
-        background-color: #f2f2f2; /* Light grey background for headers */
+        background: rgba(0, 0, 0, 0.4); /* Darker header background */
+        font-weight: bold; /* Highlight headers */
+        text-align: center;
     }
 
-    tr:nth-child(even) {
-        background-color: #f9f9f9; /* Alternate row colors for readability */
+    tr:nth-child(odd) {
+        background: rgba(255, 255, 255, 0.1); /* Subtle alternating row color */
+    }
+
+    tr:hover {
+        background: rgba(255, 255, 255, 0.3); /* Highlight on hover */
+        transition: background 0.3s ease; /* Smooth hover effect */
+    }
+
+    h1 {
+        text-align: center;
+        color: #FFFFFF;
+        margin-top: 2rem;
+        font-size: 2.5rem; /* Enhance the title size */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
     }
 </style>
+
 
 <h1 class="text-center">Leaderboard</h1>
 <table>

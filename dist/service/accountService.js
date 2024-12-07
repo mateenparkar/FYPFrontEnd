@@ -49,7 +49,7 @@ var updatePassword = function (update) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.put('http://16.16.24.64:8080/api/account', update)];
+                    return [4 /*yield*/, axios_1.default.put('http://13.49.21.183/api/account', update)];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 3];

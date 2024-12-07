@@ -49,7 +49,7 @@ var login = function (credentials) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://16.16.24.64:8080/api/login", credentials)];
+                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/login", credentials)];
                 case 1:
                     response = _c.sent();
                     return [2 /*return*/, response.data.token];
@@ -76,7 +76,7 @@ var register = function (user) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://16.16.24.64:8080/api/register", user)];
+                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/register", user)];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 3];
@@ -104,7 +104,7 @@ var whoami = function (token) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get("http://16.16.24.64:8080/api/whoami", {
+                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/whoami", {
                             headers: { Authorization: "Bearer ".concat(token) },
                         })];
                 case 1:

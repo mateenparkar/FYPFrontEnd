@@ -48,7 +48,7 @@ var getUserById = function (id) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get("http://16.16.24.64:8080/api/user/".concat(id))];
+                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/user/".concat(id))];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response.data.username];
@@ -68,7 +68,7 @@ var getLeaderboard = function () {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 6, , 7]);
-                    return [4 /*yield*/, axios_1.default.get('http://16.16.24.64:8080/api/leaderboard')];
+                    return [4 /*yield*/, axios_1.default.get('http://13.49.21.183/api/leaderboard')];
                 case 1:
                     response = _c.sent();
                     leaderboardData = response.data;
