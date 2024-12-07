@@ -31,10 +31,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: npm install  # Install dependencies
+      - run: npm install 
       - run: npm run build --if-present
 
-      # Deploy to EC2 instance
+      
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
@@ -42,10 +42,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           port: 22
-          source: "dist/*"  # Adjust this if your build output is in a different folder
-          target: "/home/ubuntu/FYPFrontEnd/"  # Adjust this to your frontend directory
+          source: "dist/*"  
+          target: "/home/ubuntu/FYPFrontEnd/" 
 
-      # Restart your backend service and pull the latest code
       - name: Restart Backend Service and Pull Latest Code
         run: |
           echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
