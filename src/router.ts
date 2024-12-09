@@ -9,6 +9,7 @@ import { CommunityController } from './controller/CommunityController';
 import { PostController } from './controller/PostController';
 import { AccountController } from './controller/AccountController';
 import { LeaderboardController } from './controller/LeaderboardController';
+import { StreakController } from './controller/streakController';
 
 const router = express.Router();
 
@@ -31,4 +32,6 @@ router.get('/account', login, AccountController.get)
 router.post('/api/account', login, AccountController.update)
 router.post('/updateBook/:id', login, BooksController.updateUserBook);
 router.get('/leaderboard', LeaderboardController.get);
+router.get('/streak', login, StreakController.get);
+router.post('/updateStreak', login, StreakController.updateStreak);
 export default router

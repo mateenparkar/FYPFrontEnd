@@ -12,46 +12,28 @@
     </div>
 </div>
 
-<style>
-    body {
-        background: linear-gradient(to right, #e27d5f, #e8d5b7);
-        color: #FFFFFF; 
-    }
-
-    .tab-col {
-        text-align: center;
-        padding: 1rem;
-        border-right: 1px solid rgba(255, 255, 255, 0.5); 
-        transition: background 0.3s; 
-    }
-
-    .tab-col:last-child {
-        border-right: none; 
-    }
-
-    .tab-col:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-
-</style>
-<div id="book-carousel" class="carousel slide" data-bs-ride="carousel">
+<div id="book-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
     {% if errormessage %}
-                        <div class="alert alert-danger" id="invalid-user-login">
-                            {{ errormessage }}
-                        </div>
-                    {% endif %}
+    <div class="alert alert-danger" id="invalid-user-login">
+        {{ errormessage }}
+    </div>
+    {% endif %}
     <div class="carousel-inner">
         {% for book in books %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <div class="text-center">
+            <div class="text-center book-card">
                 <h2>{{ book.title }}</h2>
                 <p><strong>Author:</strong> {{ book.authorName }}</p>
                 <p><strong>Published Date:</strong> {{ book.formattedPublishedDate }}</p>
                 <p><strong>Genre:</strong> {{ book.genreName }}</p>
                 <p><strong>Description:</strong> {{ book.description }}</p>
+                <!-- Link to book detail page -->
                 <a href="/books/{{ book.book_id }}">
-                    <img class="cover-image" src="{{ book.cover_image_url }}" alt="Book Cover">
+                    <img 
+                        class="cover-image" 
+                        src="{{ book.cover_image_url }}" 
+                        alt="Book Cover" 
+                        loading="lazy">
                 </a>
             </div>
         </div>
@@ -65,5 +47,128 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-</div>   
+</div>
+
+<style>
+body {
+    background: linear-gradient(to right, #f7f1e3, #d1ccc0);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.tab-col {
+    text-align: center;
+    padding: 1rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    transition: background 0.3s, color 0.3s;
+    font-weight: 500;
+}
+.tab-col:last-child {
+    border-right: none;
+}
+.tab-col:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+.nav-link.active {
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 2px solid #e8d5b7;
+}
+
+.carousel-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%; 
+    min-height: 400px; 
+}
+
+/* Smooth Transitions */
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+.carousel-fade .carousel-item.active {
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out;
+}
+.carousel-item {
+    flex: 0 0 auto; 
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+.carousel-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.carousel-item p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.carousel-control-prev, 
+.carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; 
+    height: 50px;
+    opacity: 0.7; 
+}
+.cover-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    object-fit: cover;
+}
+
+.cover-image:hover {
+    transform: scale(1.05);
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+    width: 2rem;
+    height: 2rem;
+}
+
+.alert {
+    margin: 1rem auto;
+    max-width: 50%;
+    border-radius: 5px;
+    font-weight: 500;
+    text-align: center;
+    background-color: rgba(255, 99, 71, 0.9);
+    color: #fff;
+}
+
+.book-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+}
+.book-card h2 {
+    color: #e27d5f;
+}
+.container-fluid {
+    margin-top: 2rem; 
+    max-width: 1200px; 
+    padding: 0 2rem;
+}
+@media (max-width: 768px) {
+    .carousel-inner {
+        padding: 1rem;
+    }
+    .tab-col {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+</style>
 {% endblock %}
