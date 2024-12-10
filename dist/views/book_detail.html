@@ -165,33 +165,41 @@
 </div>
 
 <script>
-    // JavaScript to toggle the rating form and update the streak
     document.getElementById('read-checkbox').addEventListener('change', function() {
-        var ratingForm = document.getElementById('rating-form');
-        if (this.checked) {
-            ratingForm.style.display = 'block';
-            
-            // Send request to update streak
-            fetch('/updateStreak', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: '{{ user.userId }}', // Make sure userId is available in the template
-                    lastActivityDate: Date.now()
-                })
+    var ratingForm = document.getElementById('rating-form');
+    if (this.checked) {
+        ratingForm.style.display = 'block';
+
+        // Format the current date as yyyy-MM-dd
+        const formattedDate = new Date().toISOString().split('T')[0];
+
+        // Send request to update streak
+        fetch('/updateStreak', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId: '{{ user.userId }}', // Ensure userId is available in the template
+                lastActivityDate: formattedDate
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Streak updated:', data);
-            })
-            .catch(error => {
-                console.error('Error updating streak:', error);
-            });
-        } else {
-            ratingForm.style.display = 'none';
-        }
-    });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update streak');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Streak updated:', data);
+        })
+        .catch(error => {
+            console.error('Error updating streak:', error);
+        });
+    } else {
+        ratingForm.style.display = 'none';
+    }
+});
+
 </script>
 {% endblock %}

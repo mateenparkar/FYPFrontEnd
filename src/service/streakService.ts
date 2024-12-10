@@ -9,6 +9,7 @@ export const updateStreak = async function(update: UpdateStreak): Promise<void> 
     try {
         // Use template literals to include userId and lastActivityDate in the URL
         const lastActivityDateFormatted = new Date(update.lastActivityDate).toISOString().split('T')[0];
+        console.log(lastActivityDateFormatted)
 
         await axios.post(`http://13.49.21.183/api/updateStreak/${update.userId}/${lastActivityDateFormatted}`, update);
     } catch (e) {

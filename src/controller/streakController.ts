@@ -3,6 +3,7 @@ import { getStreak, updateStreak } from '../service/streakService';
 
 export class StreakController {
     public static async get(req: Request, res: Response): Promise<void> {
+        await updateStreak;
         const streak = await getStreak(req.session.user!.userId);
 
         // Format the lastActivityDate if it exists

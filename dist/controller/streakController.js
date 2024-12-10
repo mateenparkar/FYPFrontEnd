@@ -46,8 +46,11 @@ var StreakController = /** @class */ (function () {
             var streak, formattedDate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, streakService_1.getStreak)(req.session.user.userId)];
+                    case 0: return [4 /*yield*/, streakService_1.updateStreak];
                     case 1:
+                        _a.sent();
+                        return [4 /*yield*/, (0, streakService_1.getStreak)(req.session.user.userId)];
+                    case 2:
                         streak = _a.sent();
                         // Format the lastActivityDate if it exists
                         if (streak && streak.lastActivityDate) {
