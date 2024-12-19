@@ -6,7 +6,7 @@ export class StreakController {
         await updateStreak;
         const streak = await getStreak(req.session.user!.userId);
 
-        // Format the lastActivityDate if it exists
+
         if (streak && streak.lastActivityDate) {
             const formattedDate = new Date(streak.lastActivityDate).toLocaleDateString('en-GB', {
                 weekday: 'long',

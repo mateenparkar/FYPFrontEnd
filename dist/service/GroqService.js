@@ -35,65 +35,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreakController = void 0;
-var streakService_1 = require("../service/streakService");
-var StreakController = /** @class */ (function () {
-    function StreakController() {
-    }
-    StreakController.get = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var streak, formattedDate;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, streakService_1.updateStreak];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, (0, streakService_1.getStreak)(req.session.user.userId)];
-                    case 2:
-                        streak = _a.sent();
-                        if (streak && streak.lastActivityDate) {
-                            formattedDate = new Date(streak.lastActivityDate).toLocaleDateString('en-GB', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            });
-                            streak.lastActivityDate = formattedDate;
-                        }
-                        res.render('streak', { user: req.session.user, streak: streak });
-                        return [2 /*return*/];
-                }
-            });
+exports.generateQuestions = void 0;
+var axios_1 = __importDefault(require("axios"));
+var generateQuestions = function (bookName) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/groq/".concat(bookName))];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response.data];
+                case 2:
+                    error_1 = _a.sent();
+                    throw new Error('Could not get questions');
+                case 3: return [2 /*return*/];
+            }
         });
-    };
-    StreakController.updateStreak = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        data = {
-                            userId: req.session.user.userId,
-                            lastActivityDate: req.body.lastActivityDate
-                        };
-                        return [4 /*yield*/, (0, streakService_1.updateStreak)(data)];
-                    case 1:
-                        _a.sent();
-                        res.redirect('/account');
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_1 = _a.sent();
-                        console.error(e_1);
-                        res.locals.errormessage = e_1.message;
-                        res.redirect('/account');
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return StreakController;
-}());
-exports.StreakController = StreakController;
+    });
+};
+exports.generateQuestions = generateQuestions;

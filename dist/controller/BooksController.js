@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BooksController = void 0;
 var booksService_1 = require("../service/booksService");
 var commentService_1 = require("../service/commentService");
+var GroqService_1 = require("../service/GroqService");
 var BooksController = /** @class */ (function () {
     function BooksController() {
     }
@@ -65,11 +66,11 @@ var BooksController = /** @class */ (function () {
     };
     BooksController.getOne = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, book, comment, hasReadFlag, e_2;
+            var id, book, comment, bookName, questions, hasReadFlag, e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
+                        _a.trys.push([0, 5, , 6]);
                         id = parseInt(req.params.id, 10);
                         return [4 /*yield*/, (0, booksService_1.viewBook)(id)];
                     case 1:
@@ -77,16 +78,27 @@ var BooksController = /** @class */ (function () {
                         return [4 /*yield*/, (0, commentService_1.getComments)(id)];
                     case 2:
                         comment = _a.sent();
-                        return [4 /*yield*/, (0, booksService_1.hasUserReadBook)(req.session.user.userId, id)];
+                        bookName = req.params.bookName;
+                        return [4 /*yield*/, (0, GroqService_1.generateQuestions)(bookName)];
                     case 3:
-                        hasReadFlag = _a.sent();
-                        res.render('book_detail.html', { books: book, hasRead: hasReadFlag, user: req.session.user, comments: comment });
-                        return [3 /*break*/, 5];
+                        questions = _a.sent();
+                        return [4 /*yield*/, (0, booksService_1.hasUserReadBook)(req.session.user.userId, id)];
                     case 4:
+                        hasReadFlag = _a.sent();
+                        res.render('book_detail.html', {
+                            books: book,
+                            hasRead: hasReadFlag,
+                            user: req.session.user,
+                            comments: comment,
+                            questions: questions,
+                        });
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_2 = _a.sent();
                         console.error(e_2);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        res.status(500).send('Internal Server Error');
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -162,7 +174,7 @@ var BooksController = /** @class */ (function () {
                         return [4 /*yield*/, (0, booksService_1.updateUserBook)(data)];
                     case 1:
                         _a.sent();
-                        res.redirect('/books');
+                        res.json({ message: 'Book status updated successfully' });
                         return [3 /*break*/, 3];
                     case 2:
                         e_5 = _a.sent();

@@ -10,6 +10,7 @@ import { PostController } from './controller/PostController';
 import { AccountController } from './controller/AccountController';
 import { LeaderboardController } from './controller/LeaderboardController';
 import { StreakController } from './controller/streakController';
+import { GroqController } from './controller/GroqController';
 
 const router = express.Router();
 
@@ -34,4 +35,5 @@ router.post('/updateBook/:id', login, BooksController.updateUserBook);
 router.get('/leaderboard', LeaderboardController.get);
 router.get('/streak', login, StreakController.get);
 router.post('/updateStreak', login, StreakController.updateStreak);
+router.post('/generateQuestions', login, GroqController.generateQuestions);
 export default router

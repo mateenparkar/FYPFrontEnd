@@ -36,64 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreakController = void 0;
-var streakService_1 = require("../service/streakService");
-var StreakController = /** @class */ (function () {
-    function StreakController() {
+exports.GroqController = void 0;
+var GroqService_1 = require("../service/GroqService");
+var GroqController = /** @class */ (function () {
+    function GroqController() {
     }
-    StreakController.get = function (req, res) {
+    GroqController.generateQuestions = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var streak, formattedDate;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, streakService_1.updateStreak];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, (0, streakService_1.getStreak)(req.session.user.userId)];
-                    case 2:
-                        streak = _a.sent();
-                        if (streak && streak.lastActivityDate) {
-                            formattedDate = new Date(streak.lastActivityDate).toLocaleDateString('en-GB', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            });
-                            streak.lastActivityDate = formattedDate;
-                        }
-                        res.render('streak', { user: req.session.user, streak: streak });
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    StreakController.updateStreak = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data, e_1;
+            var bookName, questions, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        data = {
-                            userId: req.session.user.userId,
-                            lastActivityDate: req.body.lastActivityDate
-                        };
-                        return [4 /*yield*/, (0, streakService_1.updateStreak)(data)];
+                        bookName = req.body.bookName;
+                        return [4 /*yield*/, (0, GroqService_1.generateQuestions)(bookName)];
                     case 1:
-                        _a.sent();
-                        res.redirect('/account');
+                        questions = _a.sent();
+                        res.status(200).json(questions);
                         return [3 /*break*/, 3];
                     case 2:
-                        e_1 = _a.sent();
-                        console.error(e_1);
-                        res.locals.errormessage = e_1.message;
-                        res.redirect('/account');
+                        error_1 = _a.sent();
+                        console.error(error_1);
+                        res.status(500).json({ message: 'Failed to generate questions.' });
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return StreakController;
+    return GroqController;
 }());
-exports.StreakController = StreakController;
+exports.GroqController = GroqController;

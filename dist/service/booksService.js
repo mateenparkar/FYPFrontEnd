@@ -210,20 +210,28 @@ var getLikedBooks = function (id) {
 exports.getLikedBooks = getLikedBooks;
 var updateUserBook = function (book) {
     return __awaiter(this, void 0, void 0, function () {
-        var error_4;
+        var result, error_4;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
+                    console.log('Received request to update book:', book); // Log the incoming data
                     return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/updateBookForUser", book)];
                 case 1:
-                    _b.sent();
+                    result = _b.sent();
+                    if (result.status === 200) {
+                        console.log('Book status successfully updated');
+                    }
+                    else {
+                        console.error('Failed to update book status:', result);
+                    }
                     return [3 /*break*/, 3];
                 case 2:
                     error_4 = _b.sent();
+                    console.error('Error updating book status:', error_4); // Log the error
                     if (((_a = error_4.response) === null || _a === void 0 ? void 0 : _a.status) != 200) {
-                        throw new Error('Failed to delete book');
+                        throw new Error('Failed to update book status');
                     }
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];

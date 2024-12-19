@@ -134,6 +134,14 @@
         </label>
     </div>
 
+    <div id="quiz-container" style="display: none;">
+        <h3>Answer these questions to update your streak:</h3>
+        <form id="quiz-form">
+            <div id="questions"></div>
+            <button type="submit" class="rating-submit">Submit Answers</button>
+        </form>
+    </div>
+
     <form id="rating-form" class="rating-form" action="/updateBook/{{books.book_id}}" method="post">
         <label for="rating-input">Rate this book (1-5):</label>
         <input type="number" id="rating-input" class="rating-input" name="rating" min="1" max="5" required>
@@ -165,41 +173,206 @@
 </div>
 
 <script>
-    document.getElementById('read-checkbox').addEventListener('change', function() {
-    var ratingForm = document.getElementById('rating-form');
-    if (this.checked) {
-        ratingForm.style.display = 'block';
+    let data = []; // Store parsed questions with options and correct answer.
+    
+    document.getElementById('read-checkbox').addEventListener('change', async function () {
+        const quizContainer = document.getElementById('quiz-container');
+        console.log('Checkbox changed');
+        if (this.checked) {
+            try {
+                // Fetch questions using POST
+                const response = await fetch('/generateQuestions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ bookName: '{{ books.title }}' }) // Send book name in the request body
+                });
+    
+                if (!response.ok) throw new Error('Failed to fetch questions');
+    
+                const rawData = await response.json(); // Raw data from the server
+                console.log("Fetched questions data:", rawData);
+    
+                // Parse the raw data into structured questions
+                data = parseQuestions(rawData);
+                console.log("Parsed Questions:", data);
+    
+                // Render the questions on the page
+                renderQuestions();
+                quizContainer.style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+            }
+        } else {
+            quizContainer.style.display = 'none';
+        }
+    });
+    
+    // Parse the raw data into structured questions
+    function parseQuestions(rawData) {
+        let questions = [];
+        let currentQuestion = {};
+        
+        rawData.forEach(line => {
+            line = line.trim(); // Remove any leading/trailing spaces
+    
+            if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.")) {
+                // New question
+                if (currentQuestion.questionText) {
+                    questions.push(currentQuestion); // Push previous question
+                }
+                currentQuestion = { questionText: line }; // Start new question
+            } else if (line.startsWith("A)") || line.startsWith("B)") || line.startsWith("C)")) {
+                // Options
+                currentQuestion.options = currentQuestion.options || [];
+                currentQuestion.options.push(line);
+            } else if (line.startsWith("Answer:")) {
+                // Correct answer
+                const correctAnswerText = line.replace("Answer:", "").trim();
+                const correctAnswerLetter = correctAnswerText.split(" ")[0]; // Extract the letter (A, B, C)
+                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; // Store both
+            }
+        });
+        if (currentQuestion.questionText) {
+            questions.push(currentQuestion); // Push last question
+        }
+        return questions;
+    }
+    
+    // Render the questions dynamically
+    function renderQuestions() {
+        const questionsDiv = document.getElementById('questions');
+        questionsDiv.innerHTML = ''; // Clear previous questions
+        data.forEach(question => {
+            questionsDiv.innerHTML += `
+                <div class="question-block">
+                    <p>${question.questionText}</p>
+                    ${question.options.map(option => `
+                        <label>
+                            <input type="radio" name="${question.questionText}" value="${option.trim()}">
+                            ${option}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+        });
+    }
+    
+    document.getElementById('quiz-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-        // Format the current date as yyyy-MM-dd
-        const formattedDate = new Date().toISOString().split('T')[0];
+    const answers = Array.from(document.querySelectorAll('.question-block')).map(block => {
+        const selectedOption = block.querySelector('input[type="radio"]:checked');
+        const questionText = block.querySelector('p').innerText.trim();
+        return {
+            question: questionText,
+            answer: selectedOption ? selectedOption.value : null
+        };
+    });
 
-        // Send request to update streak
-        fetch('/updateStreak', {
+    console.log("User's Answers:", answers);
+
+    try {
+        let allCorrect = true;
+        let incorrectAnswers = [];
+
+        answers.forEach(answer => {
+            const question = data.find(q => q.questionText.trim() === answer.question);
+            if (!question) {
+                console.error(`Could not find question for: ${answer.question}`);
+                return;
+            }
+
+            console.log("Checking question:", answer.question);
+            console.log("User's Answer:", answer.answer);
+            console.log("Correct Answer:", question.correctAnswer.text);
+
+            // Check if the user's answer matches the correct answer
+            const userAnswerLetter = answer.answer.split(' ')[0]; // Extract the letter (A, B, C)
+            if (userAnswerLetter !== question.correctAnswer.letter) {
+                allCorrect = false;
+                incorrectAnswers.push({
+                    question: answer.question,
+                    userAnswer: answer.answer,
+                    correctAnswer: question.correctAnswer.text
+                });
+            }
+        });
+
+        if (allCorrect) {
+    alert("All answers are correct! Updating book read status first.");
+    console.log("All answers are correct.");
+
+    // First, mark the book as read and update on the server
+    const book = {
+        userId: '{{ user.userId }}',
+        bookId: '{{ books.book_id }}',
+        hasRead: true // Mark the book as read
+    };
+
+    console.log('Sending book data to server:', book);
+
+    // Call the endpoint to update the book's status
+    const bookUpdateResponse = await fetch(`/updateBook/${book.bookId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(book)
+    });
+
+    if (!bookUpdateResponse.ok) throw new Error('Failed to update book read status');
+
+    const bookUpdateData = await bookUpdateResponse.json();
+    console.log('Book read status updated:', bookUpdateData);
+
+    // After updating the book, now update the streak
+    try {
+        const streakResponse = await fetch('/updateStreak', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userId: '{{ user.userId }}', // Ensure userId is available in the template
-                lastActivityDate: formattedDate
+                userId: '{{ user.userId }}',
+                lastActivityDate: new Date().toISOString().split('T')[0],
             })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update streak');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Streak updated:', data);
-        })
-        .catch(error => {
-            console.error('Error updating streak:', error);
         });
-    } else {
-        ratingForm.style.display = 'none';
+
+        // Log the response status and headers
+        console.log('Streak Response Status:', streakResponse.status);
+        console.log('Streak Response Headers:', streakResponse.headers);
+
+        // Read the response as text to debug
+        const responseText = await streakResponse.text(); // Read as plain text first
+        console.log('Streak Response Text:', responseText); // Log the raw text response
+
+        // Attempt to parse the response as JSON
+        try {
+            const streakData = JSON.parse(responseText);
+            console.log('Streak updated:', streakData);
+        } catch (jsonError) {
+            console.error('Error parsing streak response:', jsonError);
+            console.log('Raw Response:', responseText); // Log the raw response to understand the issue
+        }
+
+    } catch (error) {
+        console.error('Error submitting answers or updating streak:', error);
+    }
+} else {
+    alert("Some answers are incorrect. Please try again.");
+    console.log("Incorrect Answers:", incorrectAnswers);
+}
+
+    } catch (error) {
+        console.error('Error submitting answers or updating streak:', error);
     }
 });
 
-</script>
+    </script>
+    
+    
+    
+
 {% endblock %}

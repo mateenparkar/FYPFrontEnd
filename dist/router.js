@@ -15,6 +15,7 @@ var PostController_1 = require("./controller/PostController");
 var AccountController_1 = require("./controller/AccountController");
 var LeaderboardController_1 = require("./controller/LeaderboardController");
 var streakController_1 = require("./controller/streakController");
+var GroqController_1 = require("./controller/GroqController");
 var router = express_1.default.Router();
 router.get('/login', LoginController_1.LoginController.get);
 router.post('/login', LoginController_1.LoginController.post);
@@ -36,4 +37,5 @@ router.post('/updateBook/:id', auth_1.login, BooksController_1.BooksController.u
 router.get('/leaderboard', LeaderboardController_1.LeaderboardController.get);
 router.get('/streak', auth_1.login, streakController_1.StreakController.get);
 router.post('/updateStreak', auth_1.login, streakController_1.StreakController.updateStreak);
+router.post('/generateQuestions', auth_1.login, GroqController_1.GroqController.generateQuestions);
 exports.default = router;
