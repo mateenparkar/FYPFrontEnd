@@ -50,62 +50,74 @@
 </div>
 
 <style>
+/* Updated Color Scheme */
 body {
-    background: linear-gradient(to right, #f7f1e3, #d1ccc0);
-    font-family: 'Roboto', sans-serif;
+    background: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
     color: #333;
 }
 
 .tab-col {
     text-align: center;
     padding: 1rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.5);
     transition: background 0.3s, color 0.3s;
     font-weight: 500;
+    color: #333;
+    border-bottom: 2px solid transparent;
 }
 .tab-col:last-child {
     border-right: none;
 }
-.tab-col:hover {
-    background: rgba(255, 255, 255, 0.2);
+.tab-col:hover, .nav-link.active {
+    background: #007bff;
     color: #fff;
+    border-bottom-color: #0056b3;
 }
-.nav-link.active {
-    font-weight: bold;
-    color: #fff;
-    border-bottom: 2px solid #e8d5b7;
+.nav-link {
+    text-decoration: none;
 }
 
 .carousel-inner {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     text-align: center;
     height: 100%; 
-    min-height: 400px; 
+    min-height: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-/* Smooth Transitions */
-.carousel-fade .carousel-item {
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-}
-.carousel-fade .carousel-item.active {
-    opacity: 1;
-    transition: opacity 0.6s ease-in-out;
-}
 .carousel-item {
-    flex: 0 0 auto; 
-    max-width: 600px; 
-    margin: 0 auto; 
+    flex: 1 1 300px; 
+    max-width: 600px;
+    margin: 1rem; 
+    transition: transform 0.3s ease-in-out;
 }
+
 .carousel-item h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.75rem;
+    color: #007bff;
+    margin-bottom: 0.5rem;
 }
 .carousel-item p {
     margin: 0.5rem 0;
     color: #555;
+}
+
+.cover-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease-in-out;
+}
+.cover-image:hover {
+    transform: scale(1.1);
 }
 
 .carousel-control-prev, 
@@ -114,53 +126,50 @@ body {
     transform: translateY(-50%);
     width: 50px; 
     height: 50px;
-    opacity: 0.7; 
-}
-.cover-image {
-    max-width: 100%;
-    height: auto;
-    margin-top: 1rem;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-    object-fit: cover;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
 }
 
-.cover-image:hover {
-    transform: scale(1.05);
-}
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(100%);
-    width: 2rem;
-    height: 2rem;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    filter: invert(1);
 }
 
 .alert {
     margin: 1rem auto;
-    max-width: 50%;
-    border-radius: 5px;
+    max-width: 80%;
+    padding: 1rem;
+    border-radius: 10px;
     font-weight: 500;
     text-align: center;
-    background-color: rgba(255, 99, 71, 0.9);
+    background-color: #dc3545;
     color: #fff;
 }
 
 .book-card {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 1.5rem;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+.book-card:hover {
+    transform: translateY(-10px);
 }
 .book-card h2 {
-    color: #e27d5f;
+    color: #007bff;
 }
+
 .container-fluid {
-    margin-top: 2rem; 
-    max-width: 1200px; 
+    margin-top: 2rem;
+    max-width: 1200px;
     padding: 0 2rem;
 }
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .carousel-inner {
         padding: 1rem;
@@ -171,4 +180,20 @@ body {
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carouselItems = document.querySelectorAll('.carousel-item');
+
+    carouselItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = 'scale(1.05)';
+        });
+        item.addEventListener('mouseout', () => {
+            item.style.transform = 'scale(1)';
+        });
+    });
+});
+</script>
+
 {% endblock %}
