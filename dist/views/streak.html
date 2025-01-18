@@ -24,7 +24,7 @@
 
 <style>
 body {
-    background: linear-gradient(to right, #f7f1e3, #d1ccc0);
+    background-color: #f1f1f1; /* Subtle light gray background */
     font-family: 'Roboto', sans-serif;
     color: #333;
 }
@@ -32,26 +32,30 @@ body {
 .tab-col {
     text-align: center;
     padding: 1rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
     transition: background 0.3s, color 0.3s;
     font-weight: 500;
+    background-color: #f7f7f7; /* Light gray background for tabs */
 }
 .tab-col:last-child {
     border-right: none;
 }
 .tab-col:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    background: #e8e8e8; /* Slightly darker shade for hover */
+    color: #007bff; /* Blue text on hover for contrast */
 }
 .nav-link.active {
     font-weight: bold;
-    color: #fff;
-    border-bottom: 2px solid #e8d5b7;
+    color: #007bff; /* Blue text for active tab */
+    border-bottom: 2px solid #007bff;
 }
 
 .streak-info {
     padding: 2rem;
     text-align: center;
+    background-color: #ffffff; /* White background for content area */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 8px;
 }
 
 .streak-carousel {
@@ -64,6 +68,7 @@ body {
     background-color: rgba(255, 99, 71, 0.9);
     color: #fff;
     padding: 1rem;
+    border-radius: 5px;
 }
 
 #reset-streak-btn {
@@ -71,8 +76,8 @@ body {
 }
 
 .container-fluid {
-    margin-top: 2rem; 
-    max-width: 1200px; 
+    margin-top: 2rem;
+    max-width: 1200px;
     padding: 0 2rem;
 }
 

@@ -5,54 +5,65 @@
 {% block content %}
 <div class="text-center">
     <style>
-        /* Specific styles for book_detail.html */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
+            background-color: #f5f5f5; 
         }
 
         .cover-image {
             max-width: 200px;
             max-height: 300px;
-            margin: 0 auto;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .like-button {
             cursor: pointer;
             text-decoration: none;
             color: white;
-            background-color: #ff5733; /* Specific color for book_detail.html */
-            border: 1px solid #ff5733; /* Specific color for book_detail.html */
-            padding: 8px 16px;
-            border-radius: 4px;
+            background-color: #ff5733;
+            border: 1px solid #ff5733;
+            padding: 10px 20px;
+            border-radius: 6px;
             display: inline-block;
+            margin: 10px 0;
         }
 
         .like-button:hover {
-            color: red;
+            background-color: #ff704d;
         }
 
         .comment-form {
             margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .comment-input {
             width: calc(100% - 32px);
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 6px;
             font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .submit-arrow {
             cursor: pointer;
-            background-color: transparent;
+            background-color: #4CAF50;
             border: none;
-            padding: 0;
-            font-size: 20px;
-            color: #555; /* Clear color for the arrow */
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .submit-arrow:hover {
+            background-color: #45a049;
         }
 
         .comments-container {
@@ -60,35 +71,35 @@
             padding: 0;
             margin: 0;
             text-align: left;
-            border-top: 1px solid #ddd; /* Add border to separate comments from other content */
+            border-top: 1px solid #ddd;
         }
 
         .comment-item {
-            margin-bottom: 20px; /* Increase spacing between comments */
+            margin-bottom: 20px;
             font-size: 16px;
-            padding: 10px; /* Add padding for better readability */
-            background-color: #f9f9f9; /* Light background color for each comment */
-            border-radius: 8px; /* Rounded corners for comments */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .comment-item strong {
-            color: #333; /* Darken username for better contrast */
-            display: block; /* Display the username as a block element */
-            margin-bottom: 5px; /* Add space between username and comment text */
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .comment-text {
-            color: #555; /* Color for the comment text */
+            color: #555;
         }
 
         .separator-line {
-            border-top: 2px solid #ddd; /* Thicker separator line */
-            margin: 30px 0; /* Increase margin for better spacing */
+            border-top: 2px solid #ddd;
+            margin: 30px 0;
         }
 
         .rating-form {
-            display: none; /* Hide the rating form initially */
+            display: none;
             margin-top: 20px;
         }
 
@@ -96,16 +107,16 @@
             width: 50px;
             padding: 5px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             margin-right: 10px;
         }
 
         .rating-submit {
-            padding: 8px 16px;
-            background-color: #4CAF50; /* Green background */
+            padding: 10px 20px;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
         }
 
@@ -116,6 +127,27 @@
         .checkbox-container {
             margin-top: 20px;
             text-align: left;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .question-block label {
+            display: block;
+            margin: 5px 0;
         }
     </style>
 
@@ -173,32 +205,29 @@
 </div>
 
 <script>
-    let data = []; // Store parsed questions with options and correct answer.
+    let data = []; 
     
     document.getElementById('read-checkbox').addEventListener('change', async function () {
         const quizContainer = document.getElementById('quiz-container');
         console.log('Checkbox changed');
         if (this.checked) {
             try {
-                // Fetch questions using POST
                 const response = await fetch('/generateQuestions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ bookName: '{{ books.title }}' }) // Send book name in the request body
+                    body: JSON.stringify({ bookName: '{{ books.title }}' }) 
                 });
     
                 if (!response.ok) throw new Error('Failed to fetch questions');
     
-                const rawData = await response.json(); // Raw data from the server
+                const rawData = await response.json(); 
                 console.log("Fetched questions data:", rawData);
     
-                // Parse the raw data into structured questions
                 data = parseQuestions(rawData);
                 console.log("Parsed Questions:", data);
     
-                // Render the questions on the page
                 renderQuestions();
                 quizContainer.style.display = 'block';
             } catch (error) {
@@ -209,41 +238,36 @@
         }
     });
     
-    // Parse the raw data into structured questions
     function parseQuestions(rawData) {
         let questions = [];
         let currentQuestion = {};
         
         rawData.forEach(line => {
-            line = line.trim(); // Remove any leading/trailing spaces
+            line = line.trim(); 
     
             if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.")) {
-                // New question
                 if (currentQuestion.questionText) {
-                    questions.push(currentQuestion); // Push previous question
+                    questions.push(currentQuestion); 
                 }
-                currentQuestion = { questionText: line }; // Start new question
+                currentQuestion = { questionText: line }; 
             } else if (line.startsWith("A)") || line.startsWith("B)") || line.startsWith("C)")) {
-                // Options
                 currentQuestion.options = currentQuestion.options || [];
                 currentQuestion.options.push(line);
             } else if (line.startsWith("Answer:")) {
-                // Correct answer
                 const correctAnswerText = line.replace("Answer:", "").trim();
-                const correctAnswerLetter = correctAnswerText.split(" ")[0]; // Extract the letter (A, B, C)
-                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; // Store both
+                const correctAnswerLetter = correctAnswerText.split(" ")[0]; 
+                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; 
             }
         });
         if (currentQuestion.questionText) {
-            questions.push(currentQuestion); // Push last question
+            questions.push(currentQuestion); 
         }
         return questions;
     }
     
-    // Render the questions dynamically
     function renderQuestions() {
         const questionsDiv = document.getElementById('questions');
-        questionsDiv.innerHTML = ''; // Clear previous questions
+        questionsDiv.innerHTML = ''; 
         data.forEach(question => {
             questionsDiv.innerHTML += `
                 <div class="question-block">
@@ -288,8 +312,7 @@
             console.log("User's Answer:", answer.answer);
             console.log("Correct Answer:", question.correctAnswer.text);
 
-            // Check if the user's answer matches the correct answer
-            const userAnswerLetter = answer.answer.split(' ')[0]; // Extract the letter (A, B, C)
+            const userAnswerLetter = answer.answer.split(' ')[0];
             if (userAnswerLetter !== question.correctAnswer.letter) {
                 allCorrect = false;
                 incorrectAnswers.push({
@@ -304,16 +327,14 @@
     alert("All answers are correct! Updating book read status first.");
     console.log("All answers are correct.");
 
-    // First, mark the book as read and update on the server
     const book = {
         userId: '{{ user.userId }}',
         bookId: '{{ books.book_id }}',
-        hasRead: true // Mark the book as read
+        hasRead: true 
     };
 
     console.log('Sending book data to server:', book);
 
-    // Call the endpoint to update the book's status
     const bookUpdateResponse = await fetch(`/updateBook/${book.bookId}`, {
         method: 'POST',
         headers: {
@@ -327,7 +348,6 @@
     const bookUpdateData = await bookUpdateResponse.json();
     console.log('Book read status updated:', bookUpdateData);
 
-    // After updating the book, now update the streak
     try {
         const streakResponse = await fetch('/updateStreak', {
             method: 'POST',
@@ -340,21 +360,18 @@
             })
         });
 
-        // Log the response status and headers
         console.log('Streak Response Status:', streakResponse.status);
         console.log('Streak Response Headers:', streakResponse.headers);
 
-        // Read the response as text to debug
-        const responseText = await streakResponse.text(); // Read as plain text first
-        console.log('Streak Response Text:', responseText); // Log the raw text response
+        const responseText = await streakResponse.text(); 
+        console.log('Streak Response Text:', responseText); 
 
-        // Attempt to parse the response as JSON
         try {
             const streakData = JSON.parse(responseText);
             console.log('Streak updated:', streakData);
         } catch (jsonError) {
             console.error('Error parsing streak response:', jsonError);
-            console.log('Raw Response:', responseText); // Log the raw response to understand the issue
+            console.log('Raw Response:', responseText); 
         }
 
     } catch (error) {
@@ -371,8 +388,4 @@
 });
 
     </script>
-    
-    
-    
-
 {% endblock %}
