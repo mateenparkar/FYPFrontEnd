@@ -5,11 +5,10 @@
 {% block content %}
 <div class="text-center">
     <style>
-        /* Specific styles for book_detail.html */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
-            background-color: #f5f5f5; /* Light gray background */
+            background-color: #f5f5f5; 
         }
 
         .cover-image {
@@ -206,32 +205,29 @@
 </div>
 
 <script>
-    let data = []; // Store parsed questions with options and correct answer.
+    let data = []; 
     
     document.getElementById('read-checkbox').addEventListener('change', async function () {
         const quizContainer = document.getElementById('quiz-container');
         console.log('Checkbox changed');
         if (this.checked) {
             try {
-                // Fetch questions using POST
                 const response = await fetch('/generateQuestions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ bookName: '{{ books.title }}' }) // Send book name in the request body
+                    body: JSON.stringify({ bookName: '{{ books.title }}' }) 
                 });
     
                 if (!response.ok) throw new Error('Failed to fetch questions');
     
-                const rawData = await response.json(); // Raw data from the server
+                const rawData = await response.json(); 
                 console.log("Fetched questions data:", rawData);
     
-                // Parse the raw data into structured questions
                 data = parseQuestions(rawData);
                 console.log("Parsed Questions:", data);
     
-                // Render the questions on the page
                 renderQuestions();
                 quizContainer.style.display = 'block';
             } catch (error) {
@@ -242,41 +238,36 @@
         }
     });
     
-    // Parse the raw data into structured questions
     function parseQuestions(rawData) {
         let questions = [];
         let currentQuestion = {};
         
         rawData.forEach(line => {
-            line = line.trim(); // Remove any leading/trailing spaces
+            line = line.trim(); 
     
             if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.")) {
-                // New question
                 if (currentQuestion.questionText) {
-                    questions.push(currentQuestion); // Push previous question
+                    questions.push(currentQuestion); 
                 }
-                currentQuestion = { questionText: line }; // Start new question
+                currentQuestion = { questionText: line }; 
             } else if (line.startsWith("A)") || line.startsWith("B)") || line.startsWith("C)")) {
-                // Options
                 currentQuestion.options = currentQuestion.options || [];
                 currentQuestion.options.push(line);
             } else if (line.startsWith("Answer:")) {
-                // Correct answer
                 const correctAnswerText = line.replace("Answer:", "").trim();
-                const correctAnswerLetter = correctAnswerText.split(" ")[0]; // Extract the letter (A, B, C)
-                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; // Store both
+                const correctAnswerLetter = correctAnswerText.split(" ")[0]; 
+                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; 
             }
         });
         if (currentQuestion.questionText) {
-            questions.push(currentQuestion); // Push last question
+            questions.push(currentQuestion); 
         }
         return questions;
     }
     
-    // Render the questions dynamically
     function renderQuestions() {
         const questionsDiv = document.getElementById('questions');
-        questionsDiv.innerHTML = ''; // Clear previous questions
+        questionsDiv.innerHTML = ''; 
         data.forEach(question => {
             questionsDiv.innerHTML += `
                 <div class="question-block">
@@ -321,8 +312,7 @@
             console.log("User's Answer:", answer.answer);
             console.log("Correct Answer:", question.correctAnswer.text);
 
-            // Check if the user's answer matches the correct answer
-            const userAnswerLetter = answer.answer.split(' ')[0]; // Extract the letter (A, B, C)
+            const userAnswerLetter = answer.answer.split(' ')[0];
             if (userAnswerLetter !== question.correctAnswer.letter) {
                 allCorrect = false;
                 incorrectAnswers.push({
@@ -337,16 +327,14 @@
     alert("All answers are correct! Updating book read status first.");
     console.log("All answers are correct.");
 
-    // First, mark the book as read and update on the server
     const book = {
         userId: '{{ user.userId }}',
         bookId: '{{ books.book_id }}',
-        hasRead: true // Mark the book as read
+        hasRead: true 
     };
 
     console.log('Sending book data to server:', book);
 
-    // Call the endpoint to update the book's status
     const bookUpdateResponse = await fetch(`/updateBook/${book.bookId}`, {
         method: 'POST',
         headers: {
@@ -360,7 +348,6 @@
     const bookUpdateData = await bookUpdateResponse.json();
     console.log('Book read status updated:', bookUpdateData);
 
-    // After updating the book, now update the streak
     try {
         const streakResponse = await fetch('/updateStreak', {
             method: 'POST',
@@ -373,21 +360,18 @@
             })
         });
 
-        // Log the response status and headers
         console.log('Streak Response Status:', streakResponse.status);
         console.log('Streak Response Headers:', streakResponse.headers);
 
-        // Read the response as text to debug
-        const responseText = await streakResponse.text(); // Read as plain text first
-        console.log('Streak Response Text:', responseText); // Log the raw text response
+        const responseText = await streakResponse.text(); 
+        console.log('Streak Response Text:', responseText); 
 
-        // Attempt to parse the response as JSON
         try {
             const streakData = JSON.parse(responseText);
             console.log('Streak updated:', streakData);
         } catch (jsonError) {
             console.error('Error parsing streak response:', jsonError);
-            console.log('Raw Response:', responseText); // Log the raw response to understand the issue
+            console.log('Raw Response:', responseText); 
         }
 
     } catch (error) {

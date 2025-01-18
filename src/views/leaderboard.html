@@ -3,8 +3,8 @@
 {% block content %}
 <style>
     body {
-        background: #f8f9fa; 
-        color: #333; 
+        background: #f8f9fa;
+        color: #333;
         font-family: 'Arial', sans-serif;
     }
 
@@ -12,7 +12,7 @@
         width: 70%;
         margin: 2rem auto;
         border-collapse: collapse;
-        background: #ffffff; 
+        background: #ffffff;
         color: #333;
         border-radius: 10px;
         overflow: hidden;
@@ -22,12 +22,12 @@
     th, td {
         padding: 15px;
         text-align: left;
-        border-bottom: 1px solid #ddd; 
+        border-bottom: 1px solid #ddd;
     }
 
     th {
-        background: #343a40; 
-        color: #ffffff; 
+        background: #343a40;
+        color: #ffffff;
         font-weight: bold;
         text-align: center;
     }
@@ -37,7 +37,7 @@
     }
 
     tr:hover {
-        background: #e9ecef; 
+        background: #e9ecef;
         transition: background 0.3s ease;
     }
 
@@ -50,7 +50,7 @@
 </style>
 
 <h1>Leaderboard</h1>
-<table>
+<table id="leaderboard-table">
     <thead>
         <tr>
             <th>Username</th>
@@ -66,4 +66,21 @@
         {% endfor %}
     </tbody>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let table = document.getElementById("leaderboard-table");
+        let rows = Array.from(table.rows).slice(1); 
+
+        rows.sort((rowA, rowB) => {
+            let scoreA = parseInt(rowA.cells[1].textContent);
+            let scoreB = parseInt(rowB.cells[1].textContent);
+            return scoreB - scoreA; 
+        });
+
+        // Re-append the sorted rows
+        rows.forEach(row => table.appendChild(row));
+    });
+</script>
+
 {% endblock %}
