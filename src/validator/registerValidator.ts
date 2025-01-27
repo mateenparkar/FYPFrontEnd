@@ -16,7 +16,6 @@ export const validateUser = function (user: User): string {
         return 'Password must contain at least one lower case letter.';
     }
 
-    // Check if password contains at least one special character
     if (!/[@#$%^&+=]/.test(password)) {
         return 'Password must contain at least one special character (@#$%^&+=).';
     }

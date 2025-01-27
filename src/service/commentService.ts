@@ -9,8 +9,8 @@ export const getComments = async function (bookId: number): Promise<Comment[]> {
         const commentsWithUserDetails = await Promise.all(
             comments.map(async (comment) => {
                 const userResponse = await axios.get(`http://13.49.21.183:8080/api/user/${comment.user_id}`);
-                const user: User = userResponse.data; // Adjust this based on your user model
-                return { ...comment, userName: user.username }; // Add the userName property to the comment
+                const user: User = userResponse.data; 
+                return { ...comment, userName: user.username }; 
             })
         );
         return commentsWithUserDetails;

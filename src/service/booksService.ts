@@ -97,7 +97,7 @@ export const getLikedBooks = async function(id:number):Promise<BookWithAuthor[]>
 
 export const updateUserBook = async function (book: userBooks): Promise<void> {
     try {
-        console.log('Received request to update book:', book); // Log the incoming data
+        console.log('Received request to update book:', book); 
         
         const result = await axios.post("http://13.49.21.183/api/updateBookForUser", book);
 
@@ -107,7 +107,7 @@ export const updateUserBook = async function (book: userBooks): Promise<void> {
             console.error('Failed to update book status:', result);
         }
     } catch (error) {
-        console.error('Error updating book status:', error); // Log the error
+        console.error('Error updating book status:', error); 
         if ((error as AxiosError).response?.status != 200) {
             throw new Error('Failed to update book status');
         }

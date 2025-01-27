@@ -7,7 +7,6 @@ interface UpdateStreak {
 
 export const updateStreak = async function(update: UpdateStreak): Promise<void> {
     try {
-        // Use template literals to include userId and lastActivityDate in the URL
         const lastActivityDateFormatted = new Date(update.lastActivityDate).toISOString().split('T')[0];
         console.log(lastActivityDateFormatted)
 

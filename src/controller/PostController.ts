@@ -14,7 +14,7 @@ export class PostController {
                     title: req.body.title,
                     content: req.body.content,
                     date_posted: new Date(),
-                    post_image_url: req.file ? fs.createReadStream(req.file.path) : undefined // Use fs.createReadStream to read the file
+                    post_image_url: req.file ? fs.createReadStream(req.file.path) : undefined 
                 };
                 await addPost(data);
                 res.redirect('/community');
