@@ -5,7 +5,7 @@ import type { AxiosError } from "axios";
 
 export const login = async function(credentials:Credentials):Promise<string> {
     try{
-        const response = await axios.post("http://13.49.21.183/api/login", credentials);
+        const response = await axios.post("https://13.49.21.183/api/login", credentials);
         return response.data.token;
     }catch(e){
         if((e as AxiosError).response?.status === 401){
