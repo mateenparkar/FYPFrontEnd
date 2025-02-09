@@ -239,49 +239,60 @@
     });
     
     function parseQuestions(rawData) {
-        let questions = [];
-        let currentQuestion = {};
-        
-        rawData.forEach(line => {
-            line = line.trim(); 
-    
-            if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.")) {
-                if (currentQuestion.questionText) {
-                    questions.push(currentQuestion); 
-                }
-                currentQuestion = { questionText: line }; 
-            } else if (line.startsWith("A)") || line.startsWith("B)") || line.startsWith("C)")) {
-                currentQuestion.options = currentQuestion.options || [];
-                currentQuestion.options.push(line);
-            } else if (line.startsWith("Answer:")) {
-                const correctAnswerText = line.replace("Answer:", "").trim();
-                const correctAnswerLetter = correctAnswerText.split(" ")[0]; 
-                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; 
+    let questions = [];
+    let currentQuestion = {};
+
+    rawData.forEach(line => {
+        line = line.trim(); // Clean up whitespace
+
+        // Skip empty lines
+        if (line === '') return;
+
+        // Detect a new question (starts with "Question" or numbered question like "1." or "2.")
+        if (line.startsWith("**Question") || line.match(/^\d+\./)) {
+            if (currentQuestion.questionText) {
+                questions.push(currentQuestion);  // Add the previous question if it exists
             }
-        });
-        if (currentQuestion.questionText) {
-            questions.push(currentQuestion); 
+            currentQuestion = { questionText: line };  // Start a new question
+        } else if (line.match(/^A\)/) || line.match(/^B\)/) || line.match(/^C\)/)) {
+            // If it's an answer option (A), (B), or (C), add it to the current question's options
+            currentQuestion.options = currentQuestion.options || [];
+            currentQuestion.options.push(line);
+        } else if (line.startsWith("**Answer:**")) {
+            // If it's the correct answer
+            const correctAnswerText = line.replace("**Answer:**", "").trim();
+            currentQuestion.correctAnswer = correctAnswerText.split(' ')[0]; // Extract just the letter (A, B, C)
         }
-        return questions;
+    });
+
+    // Push the last question if it exists
+    if (currentQuestion.questionText) {
+        questions.push(currentQuestion);
     }
+
+    return questions;
+}
+
+
     
-    function renderQuestions() {
-        const questionsDiv = document.getElementById('questions');
-        questionsDiv.innerHTML = ''; 
-        data.forEach(question => {
-            questionsDiv.innerHTML += `
-                <div class="question-block">
-                    <p>${question.questionText}</p>
-                    ${question.options.map(option => `
-                        <label>
-                            <input type="radio" name="${question.questionText}" value="${option.trim()}">
-                            ${option}
-                        </label>
-                    `).join('')}
-                </div>
-            `;
-        });
-    }
+function renderQuestions() {
+    const questionsDiv = document.getElementById('questions');
+    questionsDiv.innerHTML = '';  // Clear any previous content
+    data.forEach(question => {
+        questionsDiv.innerHTML += `
+            <div class="question-block">
+                <p>${question.questionText}</p>
+                ${question.options.map(option => `
+                    <label>
+                        <input type="radio" name="${question.questionText}" value="${option.trim()}">
+                        ${option}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+    });
+}
+
     
     document.getElementById('quiz-form').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -302,26 +313,30 @@
         let incorrectAnswers = [];
 
         answers.forEach(answer => {
-            const question = data.find(q => q.questionText.trim() === answer.question);
-            if (!question) {
-                console.error(`Could not find question for: ${answer.question}`);
-                return;
-            }
+    const question = data.find(q => q.questionText.trim() === answer.question);
+    if (!question) {
+        console.error(`Could not find question for: ${answer.question}`);
+        return;
+    }
 
-            console.log("Checking question:", answer.question);
-            console.log("User's Answer:", answer.answer);
-            console.log("Correct Answer:", question.correctAnswer.text);
+    console.log("Checking question:", answer.question);
+    console.log("User's Answer:", answer.answer);
+    console.log("Correct Answer:", question.correctAnswer);
 
-            const userAnswerLetter = answer.answer.split(' ')[0];
-            if (userAnswerLetter !== question.correctAnswer.letter) {
-                allCorrect = false;
-                incorrectAnswers.push({
-                    question: answer.question,
-                    userAnswer: answer.answer,
-                    correctAnswer: question.correctAnswer.text
-                });
-            }
+    // Extract the letter (A, B, C) from the user’s answer
+    const userAnswerLetter = answer.answer.split(' ')[0];
+
+    // Compare user's answer letter to the correct answer letter
+    if (userAnswerLetter !== question.correctAnswer) {
+        allCorrect = false;
+        incorrectAnswers.push({
+            question: answer.question,
+            userAnswer: answer.answer,
+            correctAnswer: question.correctAnswer,
         });
+    }
+});
+
 
         if (allCorrect) {
     alert("All answers are correct! Updating book read status first.");

@@ -239,49 +239,55 @@
     });
     
     function parseQuestions(rawData) {
-        let questions = [];
-        let currentQuestion = {};
-        
-        rawData.forEach(line => {
-            line = line.trim(); 
-    
-            if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.")) {
-                if (currentQuestion.questionText) {
-                    questions.push(currentQuestion); 
-                }
-                currentQuestion = { questionText: line }; 
-            } else if (line.startsWith("A)") || line.startsWith("B)") || line.startsWith("C)")) {
-                currentQuestion.options = currentQuestion.options || [];
-                currentQuestion.options.push(line);
-            } else if (line.startsWith("Answer:")) {
-                const correctAnswerText = line.replace("Answer:", "").trim();
-                const correctAnswerLetter = correctAnswerText.split(" ")[0]; 
-                currentQuestion.correctAnswer = { letter: correctAnswerLetter, text: correctAnswerText }; 
+    let questions = [];
+    let currentQuestion = {};
+
+    rawData.forEach(line => {
+        line = line.trim(); 
+
+        if (line === '') return;
+
+        if (line.startsWith("**Question") || line.match(/^\d+\./)) {
+            if (currentQuestion.questionText) {
+                questions.push(currentQuestion);  
             }
-        });
-        if (currentQuestion.questionText) {
-            questions.push(currentQuestion); 
+            currentQuestion = { questionText: line };  
+        } else if (line.match(/^A\)/) || line.match(/^B\)/) || line.match(/^C\)/)) {
+            currentQuestion.options = currentQuestion.options || [];
+            currentQuestion.options.push(line);
+        } else if (line.startsWith("**Answer:**")) {
+            const correctAnswerText = line.replace("**Answer:**", "").trim();
+            currentQuestion.correctAnswer = correctAnswerText.split(' ')[0]; 
         }
-        return questions;
+    });
+
+    if (currentQuestion.questionText) {
+        questions.push(currentQuestion);
     }
+
+    return questions;
+}
+
+
     
-    function renderQuestions() {
-        const questionsDiv = document.getElementById('questions');
-        questionsDiv.innerHTML = ''; 
-        data.forEach(question => {
-            questionsDiv.innerHTML += `
-                <div class="question-block">
-                    <p>${question.questionText}</p>
-                    ${question.options.map(option => `
-                        <label>
-                            <input type="radio" name="${question.questionText}" value="${option.trim()}">
-                            ${option}
-                        </label>
-                    `).join('')}
-                </div>
-            `;
-        });
-    }
+function renderQuestions() {
+    const questionsDiv = document.getElementById('questions');
+    questionsDiv.innerHTML = ''; 
+    data.forEach(question => {
+        questionsDiv.innerHTML += `
+            <div class="question-block">
+                <p>${question.questionText}</p>
+                ${question.options.map(option => `
+                    <label>
+                        <input type="radio" name="${question.questionText}" value="${option.trim()}">
+                        ${option}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+    });
+}
+
     
     document.getElementById('quiz-form').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -302,26 +308,28 @@
         let incorrectAnswers = [];
 
         answers.forEach(answer => {
-            const question = data.find(q => q.questionText.trim() === answer.question);
-            if (!question) {
-                console.error(`Could not find question for: ${answer.question}`);
-                return;
-            }
+    const question = data.find(q => q.questionText.trim() === answer.question);
+    if (!question) {
+        console.error(`Could not find question for: ${answer.question}`);
+        return;
+    }
 
-            console.log("Checking question:", answer.question);
-            console.log("User's Answer:", answer.answer);
-            console.log("Correct Answer:", question.correctAnswer.text);
+    console.log("Checking question:", answer.question);
+    console.log("User's Answer:", answer.answer);
+    console.log("Correct Answer:", question.correctAnswer);
 
-            const userAnswerLetter = answer.answer.split(' ')[0];
-            if (userAnswerLetter !== question.correctAnswer.letter) {
-                allCorrect = false;
-                incorrectAnswers.push({
-                    question: answer.question,
-                    userAnswer: answer.answer,
-                    correctAnswer: question.correctAnswer.text
-                });
-            }
+    const userAnswerLetter = answer.answer.split(' ')[0];
+
+    if (userAnswerLetter !== question.correctAnswer) {
+        allCorrect = false;
+        incorrectAnswers.push({
+            question: answer.question,
+            userAnswer: answer.answer,
+            correctAnswer: question.correctAnswer,
         });
+    }
+});
+
 
         if (allCorrect) {
     alert("All answers are correct! Updating book read status first.");
