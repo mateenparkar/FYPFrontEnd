@@ -72,7 +72,7 @@ var getComments = function (bookId) {
                                     case 1:
                                         userResponse = _a.sent();
                                         user = userResponse.data;
-                                        return [2 /*return*/, __assign(__assign({}, comment), { userName: user.username })]; // Add the userName property to the comment
+                                        return [2 /*return*/, __assign(__assign({}, comment), { userName: user.username })];
                                 }
                             });
                         }); }))];

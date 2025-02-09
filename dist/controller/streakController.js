@@ -43,7 +43,7 @@ var StreakController = /** @class */ (function () {
     }
     StreakController.get = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var streak, formattedDate;
+            var streak, userId, formattedDate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, streakService_1.updateStreak];
@@ -52,6 +52,7 @@ var StreakController = /** @class */ (function () {
                         return [4 /*yield*/, (0, streakService_1.getStreak)(req.session.user.userId)];
                     case 2:
                         streak = _a.sent();
+                        userId = req.session.user.userId;
                         if (streak && streak.lastActivityDate) {
                             formattedDate = new Date(streak.lastActivityDate).toLocaleDateString('en-GB', {
                                 weekday: 'long',
@@ -61,7 +62,7 @@ var StreakController = /** @class */ (function () {
                             });
                             streak.lastActivityDate = formattedDate;
                         }
-                        res.render('streak', { user: req.session.user, streak: streak });
+                        res.render('streak', { user: req.session.user, userId: userId, streak: streak });
                         return [2 /*return*/];
                 }
             });

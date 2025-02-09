@@ -5,6 +5,8 @@ export class StreakController {
     public static async get(req: Request, res: Response): Promise<void> {
         await updateStreak;
         const streak = await getStreak(req.session.user!.userId);
+        const userId = req.session.user!.userId;
+
 
 
         if (streak && streak.lastActivityDate) {
@@ -18,7 +20,7 @@ export class StreakController {
             streak.lastActivityDate = formattedDate;
         }
 
-        res.render('streak', { user: req.session.user, streak: streak });
+        res.render('streak', { user: req.session.user, userId: userId, streak: streak });
     }
 
     public static updateStreak = async function (req: Request, res: Response): Promise<void> {

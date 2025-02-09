@@ -61,7 +61,7 @@ var PostController = /** @class */ (function () {
                                 title: req.body.title,
                                 content: req.body.content,
                                 date_posted: new Date(),
-                                post_image_url: req.file ? fs_1.default.createReadStream(req.file.path) : undefined // Use fs.createReadStream to read the file
+                                post_image_url: req.file ? fs_1.default.createReadStream(req.file.path) : undefined
                             };
                             return [4 /*yield*/, (0, postService_1.addPost)(data)];
                         case 1:

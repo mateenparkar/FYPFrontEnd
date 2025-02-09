@@ -70,15 +70,14 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let table = document.getElementById("leaderboard-table");
-        let rows = Array.from(table.rows).slice(1); // Get all rows except the header
+        let rows = Array.from(table.rows).slice(1); 
 
         rows.sort((rowA, rowB) => {
             let scoreA = parseInt(rowA.cells[1].textContent);
             let scoreB = parseInt(rowB.cells[1].textContent);
-            return scoreB - scoreA; // Sort in descending order
+            return scoreB - scoreA; 
         });
 
-        // Re-append the sorted rows
         rows.forEach(row => table.appendChild(row));
     });
 </script>

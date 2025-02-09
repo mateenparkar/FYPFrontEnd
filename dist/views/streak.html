@@ -21,6 +21,7 @@
         <div class="alert alert-warning">Your streak has been reset this week.</div>
     {% endif %}
 </div>
+<p>User ID from session: {{ userId }}</p>
 
 <style>
 body {
@@ -88,4 +89,36 @@ body {
     }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const userId = JSON.parse("{{ userId | dump }}");
+
+        console.log("User ID from template:", userId);
+
+        if (!userId) {
+            console.error("User ID is undefined or null!");
+            return;
+        }
+
+        try {
+            const today = new Date().toISOString().split('T')[0]; 
+
+            await axios.post('/updateStreak', {
+                userId: userId,
+                lastActivityDate: today
+            });
+
+            const streak = await getStreak(userId);
+            document.querySelector('.streak-info p strong').textContent = `${streak.currentStreak} days`;
+            document.querySelector('.streak-info .alert').style.display = 'none'; 
+        } catch (error) {
+            console.error("Failed to update streak:", error);
+        }
+    });
+</script>
+
+
+
 {% endblock %}
