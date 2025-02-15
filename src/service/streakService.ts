@@ -10,7 +10,7 @@ export const updateStreak = async function(update: UpdateStreak): Promise<void> 
         const lastActivityDateFormatted = new Date(update.lastActivityDate).toISOString().split('T')[0];
         console.log(lastActivityDateFormatted)
 
-        await axios.post(`http://13.49.21.183/api/updateStreak/${update.userId}/${lastActivityDateFormatted}`, update);
+        await axios.post(`http://fyp.mateenparkar.xyz/api/updateStreak/${update.userId}/${lastActivityDateFormatted}`, update);
     } catch (e) {
         if ((e as AxiosError).response?.status === 400) {
             throw new Error('Failed to update streak');
@@ -20,7 +20,7 @@ export const updateStreak = async function(update: UpdateStreak): Promise<void> 
 
 export const getStreak = async function(userId: number){
     try{
-        const response = await axios.get(`http://13.49.21.183/api/getStreak/${userId}`);
+        const response = await axios.get(`http://fyp.mateenparkar.xyz/api/getStreak/${userId}`);
         return response.data;
     }catch(e){
         if ((e as AxiosError).response?.status === 400) {

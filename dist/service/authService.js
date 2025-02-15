@@ -71,20 +71,21 @@ exports.login = login;
 var register = function (user) {
     return __awaiter(this, void 0, void 0, function () {
         var e_2, axiosError;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/register", user)];
+                    _c.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/register", user)];
                 case 1:
-                    _b.sent();
+                    _c.sent();
                     return [3 /*break*/, 3];
                 case 2:
-                    e_2 = _b.sent();
+                    e_2 = _c.sent();
                     axiosError = e_2;
-                    if ((_a = axiosError.response) === null || _a === void 0 ? void 0 : _a.data) {
-                        throw new Error(axiosError.response.data);
+                    console.error("Registration error:", (_a = axiosError.response) === null || _a === void 0 ? void 0 : _a.data);
+                    if ((_b = axiosError.response) === null || _b === void 0 ? void 0 : _b.data) {
+                        throw new Error(JSON.stringify(axiosError.response.data));
                     }
                     else {
                         throw new Error('Failed to register');

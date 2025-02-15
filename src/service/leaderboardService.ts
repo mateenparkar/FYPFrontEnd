@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getUserById = async function(id:number)  {
     try{
-        const response = await axios.get(`http://13.49.21.183/api/user/${id}`);
+        const response = await axios.get(`http://fyp.mateenparkar.xyz/api/user/${id}`);
         return response.data.username;
     }catch(error){
         throw new Error('Could not get user');
@@ -11,7 +11,7 @@ export const getUserById = async function(id:number)  {
 
 export const getLeaderboard = async function () {
     try{
-        const response = await axios.get('http://13.49.21.183/api/leaderboard');
+        const response = await axios.get('http://fyp.mateenparkar.xyz/api/leaderboard');
         const leaderboardData = response.data;
 
         const leaderboardWithUsernames = [];
