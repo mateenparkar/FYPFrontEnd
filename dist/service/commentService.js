@@ -60,7 +60,7 @@ var getComments = function (bookId) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/comments/".concat(bookId))];
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/comments/".concat(bookId))];
                 case 1:
                     commentResponse = _a.sent();
                     comments = commentResponse.data;
@@ -68,7 +68,7 @@ var getComments = function (bookId) {
                             var userResponse, user;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, axios_1.default.get("http://13.49.21.183:8080/api/user/".concat(comment.user_id))];
+                                    case 0: return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/user/".concat(comment.user_id))];
                                     case 1:
                                         userResponse = _a.sent();
                                         user = userResponse.data;
@@ -95,7 +95,7 @@ var postComment = function (comment) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/comment", comment)];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/comment", comment)];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 3];

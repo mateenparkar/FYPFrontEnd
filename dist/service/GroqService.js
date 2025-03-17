@@ -48,7 +48,7 @@ var generateQuestions = function (bookName) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/groq/".concat(bookName))];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/groq/".concat(bookName))];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response.data];

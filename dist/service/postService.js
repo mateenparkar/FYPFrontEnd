@@ -62,7 +62,7 @@ var getPosts = function () {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get('http://13.49.21.183/api/getPosts')];
+                    return [4 /*yield*/, axios_1.default.get('http://fyp.mateenparkar.xyz/api/getPosts')];
                 case 1:
                     response = _a.sent();
                     posts = response.data;
@@ -98,7 +98,7 @@ var addPost = function (postData) {
                     formData.append('content', postData.content);
                     formData.append('date_posted', postData.date_posted.toISOString().split('T')[0]);
                     formData.append('post_image_url', postData.post_image_url);
-                    return [4 /*yield*/, axios_1.default.post('http://13.49.21.183/api/post', formData, {
+                    return [4 /*yield*/, axios_1.default.post('http://fyp.mateenparkar.xyz/api/post', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }

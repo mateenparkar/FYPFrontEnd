@@ -60,7 +60,7 @@ var viewBooks = function () {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get('http://13.49.21.183/api/books')];
+                    return [4 /*yield*/, axios_1.default.get('http://fyp.mateenparkar.xyz/api/books')];
                 case 1:
                     booksResponse = _a.sent();
                     books = booksResponse.data;
@@ -68,11 +68,11 @@ var viewBooks = function () {
                         var authorResponse, authorName, genreResponse, genreName, formattedPublishedDate, bookWithAuthor;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/author/".concat(book.author))];
+                                case 0: return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/author/".concat(book.author))];
                                 case 1:
                                     authorResponse = _a.sent();
                                     authorName = authorResponse.data.name;
-                                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/genre/".concat(book.genre))];
+                                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/genre/".concat(book.genre))];
                                 case 2:
                                     genreResponse = _a.sent();
                                     genreName = genreResponse.data.genre_name;
@@ -100,15 +100,15 @@ var viewBook = function (id) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
-                    return [4 /*yield*/, axios_1.default.get('http://13.49.21.183/api/books/' + id)];
+                    return [4 /*yield*/, axios_1.default.get('http://fyp.mateenparkar.xyz/api/books/' + id)];
                 case 1:
                     bookResponse = _a.sent();
                     book = bookResponse.data;
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/author/".concat(book.author))];
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/author/".concat(book.author))];
                 case 2:
                     authorResponse = _a.sent();
                     authorName = authorResponse.data.name;
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/genre/".concat(book.genre))];
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/genre/".concat(book.genre))];
                 case 3:
                     genreResponse = _a.sent();
                     genreName = genreResponse.data.genre_name;
@@ -133,7 +133,7 @@ var likeBook = function (book) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/addBookToUser", book)];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/addBookToUser", book)];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 3];
@@ -158,7 +158,7 @@ var deleteBook = function (book) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     console.log("Running deleteBook service with book: ", book);
-                    return [4 /*yield*/, axios_1.default.delete("http://13.49.21.183/api/deleteBookFromUser", { data: book })];
+                    return [4 /*yield*/, axios_1.default.delete("http://fyp.mateenparkar.xyz/api/deleteBookFromUser", { data: book })];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 3];
@@ -183,7 +183,7 @@ var getLikedBooks = function (id) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get('http://13.49.21.183/api/getUserBooks/' + id)];
+                    return [4 /*yield*/, axios_1.default.get('http://fyp.mateenparkar.xyz/api/getUserBooks/' + id)];
                 case 1:
                     response = _a.sent();
                     book = response.data;
@@ -217,7 +217,7 @@ var updateUserBook = function (book) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     console.log('Received request to update book:', book);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/updateBookForUser", book)];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/updateBookForUser", book)];
                 case 1:
                     result = _b.sent();
                     if (result.status === 200) {
@@ -247,7 +247,7 @@ var hasUserReadBook = function (userId, bookId) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/getBookDetails/".concat(userId, "/").concat(bookId))];
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/getBookDetails/".concat(userId, "/").concat(bookId))];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response.data];

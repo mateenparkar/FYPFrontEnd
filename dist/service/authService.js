@@ -49,7 +49,7 @@ var login = function (credentials) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/login", credentials)];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/login", credentials)];
                 case 1:
                     response = _c.sent();
                     return [2 /*return*/, response.data.token];
@@ -105,7 +105,7 @@ var whoami = function (token) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/whoami", {
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/whoami", {
                             headers: { Authorization: "Bearer ".concat(token) },
                         })];
                 case 1:

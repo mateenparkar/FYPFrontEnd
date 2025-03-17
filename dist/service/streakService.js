@@ -51,7 +51,7 @@ var updateStreak = function (update) {
                     _b.trys.push([0, 2, , 3]);
                     lastActivityDateFormatted = new Date(update.lastActivityDate).toISOString().split('T')[0];
                     console.log(lastActivityDateFormatted);
-                    return [4 /*yield*/, axios_1.default.post("http://13.49.21.183/api/updateStreak/".concat(update.userId, "/").concat(lastActivityDateFormatted), update)];
+                    return [4 /*yield*/, axios_1.default.post("http://fyp.mateenparkar.xyz/api/updateStreak/".concat(update.userId, "/").concat(lastActivityDateFormatted), update)];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 3];
@@ -75,7 +75,7 @@ var getStreak = function (userId) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, axios_1.default.get("http://13.49.21.183/api/getStreak/".concat(userId))];
+                    return [4 /*yield*/, axios_1.default.get("http://fyp.mateenparkar.xyz/api/getStreak/".concat(userId))];
                 case 1:
                     response = _b.sent();
                     return [2 /*return*/, response.data];
